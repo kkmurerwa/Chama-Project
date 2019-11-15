@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?android:attr/selectableItemBackground">
+
+    <data>
+
+        <variable
+            name="cashModel"
+            type="dev.ronnie.chama.cashandinvestments.CashAndInvestmentsViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <RelativeLayout
+            android:id="@+id/cash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="@{cashModel::openCash}">
+
+            <TextView
+                android:id="@+id/textViewDeposits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="2dp"
+                android:text="Cash"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewCash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewDeposits"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="Bank and Mpesa Accounts"
+                android:textColor="@color/blue1"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/next" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="60.5dp"
+                android:layout_marginBottom="0.dp"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/investments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="@{cashModel::openInvestMents}">
+
+            <TextView
+                android:id="@+id/textViewWithdrawals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="2dp"
+                android:text="Investments"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/investmentsNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewWithdrawals"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="0 investments"
+                android:textColor="@color/blue1"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/next" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="60.5dp"
+                android:layout_marginBottom="0.dp"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

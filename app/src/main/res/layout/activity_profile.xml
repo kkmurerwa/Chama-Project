@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="profileModel"
+            type="dev.ronnie.chama.profile.ProfileViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{profileModel::openPicture}"
+                    android:src="@drawable/user" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:backgroundTint="#fff"
+                    android:onClick="@{profileModel::setPhoto}"
+                    app:fabCustomSize="40dp"
+                    app:srcCompat="@drawable/ic_edit_black" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    android:textColor="@color/blue1"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/inputFname"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:enabled="false"
+                    android:inputType="textPersonName"
+                    android:text="@={profileModel.fname}"
+                    android:textColor="#000"
+                    app:backgroundTint="@color/blue1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Surname"
+                    android:textColor="@color/blue1"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/inputSname"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:enabled="false"
+                    android:inputType="textPersonName"
+                    android:text="@={profileModel.sname}"
+                    android:textColor="#000"
+                    app:backgroundTint="@color/blue1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number"
+                    android:textColor="@color/blue1"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/inputPhone"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:enabled="false"
+                    android:inputType="phone"
+                    android:text="@={profileModel.phone}"
+                    android:textColor="#000"
+                    app:backgroundTint="@color/blue1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email Address"
+                    android:textColor="@color/blue1"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/input_email"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#000"
+                    app:backgroundTint="@color/blue1" />
+
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/background_profile"
+                    android:enabled="false"
+                    android:onClick="@{profileModel::saveProfile}"
+                    android:text="SAVE"
+                    android:textColor="#fff" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="60dp"
+                android:indeterminateTint="@color/blue1"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="createModel"
+            type="dev.ronnie.chama.groups.CreateGroupViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relative_inner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textGroupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Group Name:"
+                android:textColor="@color/Black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/input_group_name"
+                android:layout_width="match_parent"
+                android:text="@={createModel.name}"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textGroupName"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/create_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{createModel::create}"
+                android:layout_below="@+id/input_group_name"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="Create"
+                android:textColor="@color/blue1"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:id="@+id/progressBarCreate"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>

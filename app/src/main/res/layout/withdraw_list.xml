@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="withdraw"
+            type="dev.ronnie.chama.models.WithDrawals" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/backgrounds"
+            android:orientation="vertical"
+            >
+
+
+            <TextView
+                android:id="@+id/Account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{withdraw.account}"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Account"
+                android:layout_marginTop="5dp"
+                android:text="@{withdraw.date}"
+                android:textColor="#4C4A4E"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/Amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="20dp"
+                android:text="@{withdraw.amount}"
+                android:textColor="#ff0800" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

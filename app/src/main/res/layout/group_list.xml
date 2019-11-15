@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginStart="10dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <data>
+
+        <variable
+            name="groupModel"
+            type="dev.ronnie.chama.models.Groups" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/container2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textViewDeposits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="2dp"
+            android:text="@={groupModel.group_name}"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewUserNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewDeposits"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="0 members"
+            android:textColor="#4C4A4E"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewJoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="30dp"
+            android:layout_toStartOf="@+id/image"
+            android:background="@drawable/join_textview"
+            android:padding="2dp"
+            android:visibility="gone"
+            android:text="Join Group"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/textViewAlreadyJoined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="30dp"
+            android:layout_toStartOf="@+id/image"
+            android:background="@drawable/textview_already_joined"
+            android:padding="2dp"
+            android:text="Already Joined"
+            android:textColor="#fff"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textViewRequestSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="30dp"
+            android:layout_toStartOf="@+id/image"
+            android:background="@drawable/textview_already_joined"
+            android:padding="2dp"
+            android:text="Request Sent"
+            android:textColor="#fff"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/next" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="60.5dp"
+            android:layout_marginBottom="0.dp"
+            android:background="@android:color/darker_gray" />
+    </RelativeLayout>
+
+</layout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Investment"
+            android:textColor="#000"
+            android:textSize="24sp"
+            />
+    </RelativeLayout>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:padding="30dp"
+       android:layout_height="match_parent">
+
+       <TextView
+           android:layout_width="200dp"
+           android:id="@+id/textViewType"
+           android:layout_height="wrap_content"
+           android:text="Type"
+           android:textColor="#000"
+           android:textSize="20sp"/>
+       <TextView
+           android:layout_width="200dp"
+           android:layout_marginTop="20dp"
+           android:layout_below="@+id/textViewType"
+           android:id="@+id/textViewAmount"
+           android:layout_height="wrap_content"
+           android:text="Amount"
+           android:textColor="#000"
+           android:textSize="20sp"/>
+       <TextView
+           android:layout_width="200dp"
+           android:layout_marginTop="20dp"
+           android:layout_below="@id/textViewAmount"
+           android:id="@+id/textViewMaturity"
+           android:layout_height="wrap_content"
+           android:text="Maturity Date"
+           android:textColor="#000"
+           android:textSize="20sp"/>
+
+       <TextView
+           android:layout_width="200dp"
+           android:id="@+id/textType"
+           android:layout_toEndOf="@+id/textViewType"
+           android:layout_height="wrap_content"
+           android:text="CryptoCurrency"
+           android:textColor="#000"
+           android:textSize="20sp"/>
+       <TextView
+           android:layout_width="100dp"
+           android:layout_marginTop="20dp"
+           android:layout_below="@+id/textViewType"
+           android:id="@+id/textAmount"
+           android:layout_toEndOf="@+id/textViewAmount"
+           android:layout_height="wrap_content"
+           android:text="35000"
+           android:textColor="#000"
+           android:textSize="20sp"/>
+       <TextView
+           android:layout_width="100dp"
+           android:layout_marginTop="20dp"
+           android:layout_below="@id/textViewAmount"
+           android:id="@+id/textMaturity"
+           android:layout_toEndOf="@+id/textViewMaturity"
+           android:layout_height="wrap_content"
+           android:text="9/9/2019"
+           android:textColor="#000"
+           android:textSize="20sp"/>
+
+
+   </RelativeLayout>
+
+</LinearLayout>
