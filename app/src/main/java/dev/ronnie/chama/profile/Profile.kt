@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dev.ronnie.chama.models.User
 
-class Profile(model: ProfileViewModel) {
+class Profile {
 
     companion object {
         var profile: String? = null

@@ -52,6 +52,7 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
                                 message.profile_image = ""
                                 message.name = ""
                                 mMessagesList!!.add(message)
+                                //getUserDetails2(message)
                             }
 
                         } catch (e: NullPointerException) {
@@ -71,6 +72,31 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
         })
 
         return mMessagesList
+    }
+
+
+    fun getUserDetails2(message: ChatMessage) {
+        val reference = FirebaseDatabase.getInstance().reference
+        if (message.user_id != null && message.profile_image == "") {
+            val query = reference.child("Users")
+                .orderByKey()
+                .equalTo(message.user_id)
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val singleSnapshot = dataSnapshot.children.iterator().next()
+                    message.profile_image =
+                        singleSnapshot.getValue(User::class.java)!!.profile_image
+                    message.name = singleSnapshot.getValue(User::class.java)!!.fname
+                    mMessagesList!!.add(message)
+                    model.listener.notifyAdapter()
+                    model.listener.setSelection()
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+            })
+        }
     }
 
 

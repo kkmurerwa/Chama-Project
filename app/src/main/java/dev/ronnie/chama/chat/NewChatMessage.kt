@@ -18,7 +18,7 @@ class NewChatMessage {
             return
         }
 
-        if(message[0].isWhitespace()){
+        if (message[0].isWhitespace()) {
             return
         }
         val newMessage = ChatMessage()

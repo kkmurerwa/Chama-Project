@@ -30,7 +30,7 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
     var isUserAdmin: Boolean = false
 
     companion object {
-        lateinit var adminCode: String
+        var adminCode: String = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,23 +49,29 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
             title = "Chama"
 
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+                onBackPressed()
             }
 
         }
 
         init()
+        getPendingIntent()
 
 
     }
 
     private fun init() {
         val intentComing = intent
-        group = intentComing.getParcelableExtra("group")
-        FireBaseData().getAdmin(group)
 
-        Log.d("MainGroup", "THIS GROUP ${group.group_id}, ${group.group_name}")
+        if (intentComing.hasExtra("group")) {
+            group = intentComing.getParcelableExtra("group")
+            FireBaseData().getAdmin(group)
 
+            setOnclick(group)
+        }
+    }
+
+    fun setOnclick(group: Groups) {
         cardMembers.setOnClickListener {
             val intent = Intent(this, MembersActivity::class.java)
             intent.putExtra("group", group)
@@ -76,6 +82,7 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
             intent.putExtra("group", group)
             startActivity(intent)
         }
+
 
     }
 
@@ -105,7 +112,7 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-        if (adminCode.isNotEmpty() && adminCode == FirebaseAuth.getInstance().currentUser!!.uid) {
+        if (adminCode == FirebaseAuth.getInstance().currentUser!!.uid) {
 
             isUserAdmin = true
         }
@@ -127,6 +134,29 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun getPendingIntent() {
+        val intent = intent
+        if (intent.hasExtra("pending_intent_group")) {
+
+            val groupPending: Groups = intent.getParcelableExtra("pending_intent_group")
+            FireBaseData().getAdmin(groupPending)
+
+            ChatRoomActivity.mMessageIdSet?.clear()
+            ChatRoomActivity.mMessagesList?.clear()
+            ChatRoomActivity.isActivityRunning= true
+            setOnclick(groupPending)
+
+            Log.d("Notifications", "Main: Is Activity running ${ChatRoomActivity.isActivityRunning}")
+            Log.d("Notifications", "Main: Which Group is this ${ChatRoomActivity.GroupUserIn}")
+
+            val chatroomIntent = Intent(this, ChatRoomActivity::class.java)
+            chatroomIntent.putExtra("group", groupPending)
+            chatroomIntent.putExtra("activity", true)
+            startActivity(chatroomIntent)
+        }
     }
 
 }

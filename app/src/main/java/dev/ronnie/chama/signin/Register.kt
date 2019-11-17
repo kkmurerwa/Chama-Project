@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 import dev.ronnie.chama.models.User
 
 
@@ -21,12 +22,14 @@ class Register(private var model: SignUpViewModel) {
                         .addOnCompleteListener { result: Task<AuthResult> ->
                             if (result.isSuccessful) {
                                 verifyEmail()
+
                             }
                         }.addOnFailureListener {
                             model.listener!!.toast("Something Went Wrong")
                         }
                     Log.d("Register", "Sign Success")
                     saveUser(email, password)
+
 
 
                 }
@@ -61,6 +64,7 @@ class Register(private var model: SignUpViewModel) {
 
     }
 
+
     private fun verifyEmail() {
         val user = FirebaseAuth.getInstance().currentUser
         val builder =
@@ -85,7 +89,6 @@ class Register(private var model: SignUpViewModel) {
 
         val alert = builder.create()
         alert.show()
-
 
     }
 

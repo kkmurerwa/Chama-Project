@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.iid.FirebaseInstanceId
 import dev.ronnie.chama.R
 import dev.ronnie.chama.databinding.ActivitySignUpBinding
 import dev.ronnie.chama.login.LogInActivity
@@ -117,6 +119,7 @@ class SignUpActivity : AppCompatActivity(), SignUpListener {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
 
 
 }

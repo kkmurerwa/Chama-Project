@@ -1,6 +1,9 @@
 package dev.ronnie.chama.login
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 
 class LogIn(var model: LogInViewModel) {
 
@@ -11,6 +14,7 @@ class LogIn(var model: LogInViewModel) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
+                    initFCM()
                     model.listener!!.progressBarGone()
 
                     if (FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
@@ -54,5 +58,27 @@ class LogIn(var model: LogInViewModel) {
 
     }
 
+    fun initFCM() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnSuccessListener { instanceIdResult ->
+                val deviceToken = instanceIdResult.token
 
+                Log.d("Token", "New Token $deviceToken")
+                sendRegistrationToServer(deviceToken)
+            }
+    }
+
+    private fun sendRegistrationToServer(token: String?) {
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            Log.d(
+                "MessagingService",
+                "sendRegistrationToServer: sending token to server: $token"
+            )
+            val reference = FirebaseDatabase.getInstance().reference
+            reference.child("Users")
+                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child("messaging_token")
+                .setValue(token)
+        }
+    }
 }

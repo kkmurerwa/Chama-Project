@@ -75,16 +75,34 @@ class UploadProfilePicture(var model: ProfileViewModel) {
         FirebaseDatabase.getInstance().reference
             .child("Users")
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
-            .setValue(user)
+            .child("fname")
+            .setValue(user.fname)
             .addOnCompleteListener {
-                model.listener!!.progressBarGone()
-                if (it.isSuccessful) {
-                    model.listener!!.toast("User Updated")
-                }
-            }.addOnFailureListener {
-                model.listener!!.toast("Something Went Wrong")
-                model.listener!!.progressBarGone()
+                FirebaseDatabase.getInstance().reference
+                    .child("Users")
+                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                    .child("sname")
+                    .setValue(user.sname)
+                    .addOnCompleteListener {
+                        FirebaseDatabase.getInstance().reference
+                            .child("Users")
+                            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                            .child("phone")
+                            .setValue(user.phone)
+                            .addOnCompleteListener {
+                                FirebaseDatabase.getInstance().reference
+                                    .child("Users")
+                                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    .child("profile_image")
+                                    .setValue(user.profile_image)
+                                    .addOnCompleteListener {
+                                        model.listener!!.progressBarGone()
+                                        model.listener!!.toast("User Updated")
 
+                                    }
+                            }
+
+                    }
 
             }
 

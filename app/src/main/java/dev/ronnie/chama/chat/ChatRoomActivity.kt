@@ -1,6 +1,9 @@
 package dev.ronnie.chama.chat
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ListView
@@ -20,9 +23,12 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
         var mMessagesList: MutableList<ChatMessage>? = null
         var mMessageIdSet: MutableSet<String>? = null
         var mMessagesReference: DatabaseReference? = null
-
+        var isActivityRunning = false
+        var GroupUserIn: String? = null
+        var chatRoomActivity: Activity? = null
 
     }
+
 
     var mAdapterChat: ChatMessageListAdapter? = null
     var mListView: ListView? = null
@@ -34,6 +40,7 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_room)
+        chatRoomActivity = this
 
         if (toolbar != null) {
             setSupportActionBar(toolbar as Toolbar?)
@@ -51,6 +58,10 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
 
         val intentComing = intent
         groupChat = intentComing.getParcelableExtra("group")
+        if (intentComing.hasExtra("activity")) {
+            isActivityRunning = true
+        }
+        GroupUserIn = groupChat.group_id
 
         mMessage = input_message
         mListView = listView
@@ -94,6 +105,7 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
     override fun onDestroy() {
         super.onDestroy()
         mMessagesReference!!.removeEventListener(mValueEventListener)
+        Log.d("Notifications", "ChatRoom Methods: OnDestroy Called")
     }
 
     private var mValueEventListener = object : ValueEventListener {
@@ -112,6 +124,28 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
                 .child(groupChat.group_id)
                 .child("chatroom")
         mMessagesReference!!.addValueEventListener(mValueEventListener)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        isActivityRunning = true
+        GroupUserIn = groupChat.group_id
+
+        Log.d("Notifications", "ChatRoom Methods: OnStart Called")
+
+    }
+
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent )
+        isActivityRunning = true
+        GroupUserIn = groupChat.group_id
+        Log.d("Notifications", "ChatRoom Methods: OnNewIntent Called")
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        isActivityRunning = false
     }
 
 

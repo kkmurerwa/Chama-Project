@@ -23,7 +23,7 @@ class ProfileViewModel : ViewModel() {
 
     fun getProfile() {
 
-        val displayProfile = Profile(this).getProfile()
+        val displayProfile = Profile().getProfile()
         listener!!.displayProfile(displayProfile)
     }
 
