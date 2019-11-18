@@ -31,7 +31,7 @@ class ProjectsActivity : AppCompatActivity(), ProjecsListener {
             supportActionBar!!.setHomeButtonEnabled(true)
             title = "Projects"
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+                onBackPressed()
             }
 
         }

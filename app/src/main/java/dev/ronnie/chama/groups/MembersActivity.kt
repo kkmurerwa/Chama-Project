@@ -25,7 +25,7 @@ class MembersActivity : AppCompatActivity() {
             title = "Members"
 
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+             onBackPressed()
             }
 
         }

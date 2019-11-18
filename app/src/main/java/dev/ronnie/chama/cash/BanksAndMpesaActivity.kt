@@ -25,7 +25,7 @@ class BanksAndMpesaActivity : AppCompatActivity() {
             title = "Accounts"
 
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+                onBackPressed()
             }
 
         }
@@ -36,7 +36,7 @@ class BanksAndMpesaActivity : AppCompatActivity() {
         bundle = Bundle()
         bundle.putParcelable("group", group)
 
-        val fragmentAdapter = PagerAdapter(supportFragmentManager)
+        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewpager_main.adapter = fragmentAdapter
 
         tabs_main.setupWithViewPager(viewpager_main)

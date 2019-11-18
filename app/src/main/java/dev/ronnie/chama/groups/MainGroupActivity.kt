@@ -65,7 +65,6 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
         if (intentComing.hasExtra("pending_intent_group")) {
             group = intentComing.getParcelableExtra("pending_intent_group")
             FireBaseData().getAdmin(group)
-
             setOnclick(group)
         } else if (intentComing.hasExtra("group")) {
             group = intentComing.getParcelableExtra("group")
@@ -75,7 +74,7 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
         }
     }
 
-    fun setOnclick(group: Groups) {
+    private fun setOnclick(group: Groups) {
         cardMembers.setOnClickListener {
             val intent = Intent(this, MembersActivity::class.java)
             intent.putExtra("group", group)

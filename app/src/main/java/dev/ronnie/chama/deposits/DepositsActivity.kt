@@ -36,7 +36,7 @@ class DepositsActivity : AppCompatActivity(), DepositsListener {
             title = "Deposits"
 
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+               onBackPressed()
             }
 
         }

@@ -97,7 +97,7 @@ class UploadProfilePicture(var model: ProfileViewModel) {
                                     .setValue(user.profile_image)
                                     .addOnCompleteListener {
                                         model.listener!!.progressBarGone()
-                                        model.listener!!.toast("User Updated")
+                                        model.listener!!.toast("Profile Updated")
 
                                     }
                             }

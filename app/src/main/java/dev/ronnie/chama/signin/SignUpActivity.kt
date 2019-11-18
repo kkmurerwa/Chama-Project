@@ -100,13 +100,14 @@ class SignUpActivity : AppCompatActivity(), SignUpListener {
     }
 
     override fun goToLogIn() {
-        finish()
+        finishAndRemoveTask()
         val intent = Intent(this, LogInActivity::class.java)
         startActivity(intent)
 
     }
 
     override fun goToProfile() {
+        finishAndRemoveTask()
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
 

@@ -28,7 +28,7 @@ class GroupsActivity : AppCompatActivity() {
             title = "Groups"
 
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+                onBackPressed()
             }
 
         }

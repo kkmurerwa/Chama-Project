@@ -21,7 +21,7 @@ class ProjectsExpanded : AppCompatActivity() {
             supportActionBar!!.setHomeButtonEnabled(true)
             title = "Details"
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+              onBackPressed()
             }
 
         }

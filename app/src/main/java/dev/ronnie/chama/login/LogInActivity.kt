@@ -46,7 +46,7 @@ class LogInActivity : AppCompatActivity(), LogInListener {
     }
 
     override fun goToLandingPage() {
-        finish()
+        finishAndRemoveTask()
         val intent = Intent(this, LandingPageActivity::class.java)
         startActivity(intent)
 

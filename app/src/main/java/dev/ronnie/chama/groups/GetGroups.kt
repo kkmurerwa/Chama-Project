@@ -35,7 +35,6 @@ class GetGroups(val model: AllGroupsViewModel?) {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 allGroupsList!!.clear()
-
                 if (dataSnapshot.exists()) {
                     for (singleSnapshot in dataSnapshot.children) {
 

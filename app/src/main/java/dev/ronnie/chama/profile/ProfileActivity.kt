@@ -47,7 +47,7 @@ class ProfileActivity : AppCompatActivity(), ProfileListener,
             supportActionBar!!.setHomeButtonEnabled(true)
             title = "Profile"
             (toolbar as Toolbar).setNavigationOnClickListener {
-                finish()
+                onBackPressed()
             }
 
         }

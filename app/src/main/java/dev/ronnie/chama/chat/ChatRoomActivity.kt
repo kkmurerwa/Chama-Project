@@ -1,6 +1,5 @@
 package dev.ronnie.chama.chat
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,7 +24,6 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
         var mMessagesReference: DatabaseReference? = null
         var isActivityRunning = false
         var GroupUserIn: String? = null
-        var chatRoomActivity: Activity? = null
         var mAdapterChat: ChatMessageListAdapter? = null
 
     }
