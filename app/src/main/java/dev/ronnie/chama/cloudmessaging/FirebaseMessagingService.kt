@@ -57,8 +57,7 @@ class FirebaseMessagingService :
                         .orderByKey()
                         .equalTo(groupId!!)
                 query.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        Log.d("Notif", "notif ${dataSnapshot.value}")
+                    override fun onDataChange(dataSnapshot: DataSnapshot) 
                         if (dataSnapshot.exists()) {
                             for (snapshot in dataSnapshot.children) {
 
