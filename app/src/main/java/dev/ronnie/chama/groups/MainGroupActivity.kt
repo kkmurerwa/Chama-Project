@@ -2,7 +2,6 @@ package  dev.ronnie.chama.groups
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -63,7 +62,12 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
     private fun init() {
         val intentComing = intent
 
-        if (intentComing.hasExtra("group")) {
+        if (intentComing.hasExtra("pending_intent_group")) {
+            group = intentComing.getParcelableExtra("pending_intent_group")
+            FireBaseData().getAdmin(group)
+
+            setOnclick(group)
+        } else if (intentComing.hasExtra("group")) {
             group = intentComing.getParcelableExtra("group")
             FireBaseData().getAdmin(group)
 
@@ -142,20 +146,16 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
         if (intent.hasExtra("pending_intent_group")) {
 
             val groupPending: Groups = intent.getParcelableExtra("pending_intent_group")
-            FireBaseData().getAdmin(groupPending)
 
             ChatRoomActivity.mMessageIdSet?.clear()
             ChatRoomActivity.mMessagesList?.clear()
-            ChatRoomActivity.isActivityRunning= true
-            setOnclick(groupPending)
 
-            Log.d("Notifications", "Main: Is Activity running ${ChatRoomActivity.isActivityRunning}")
-            Log.d("Notifications", "Main: Which Group is this ${ChatRoomActivity.GroupUserIn}")
+            ChatRoomActivity.mAdapterChat?.notifyDataSetChanged()
 
             val chatroomIntent = Intent(this, ChatRoomActivity::class.java)
             chatroomIntent.putExtra("group", groupPending)
-            chatroomIntent.putExtra("activity", true)
             startActivity(chatroomIntent)
+
         }
     }
 

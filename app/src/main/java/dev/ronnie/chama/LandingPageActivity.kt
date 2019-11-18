@@ -5,10 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
-import dev.ronnie.chama.chat.ChatRoomActivity
 import dev.ronnie.chama.groups.GroupsActivity
 import dev.ronnie.chama.login.LogInActivity
-import dev.ronnie.chama.models.Groups
 import dev.ronnie.chama.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_landing_page.*
 

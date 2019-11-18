@@ -26,11 +26,10 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
         var isActivityRunning = false
         var GroupUserIn: String? = null
         var chatRoomActivity: Activity? = null
+        var mAdapterChat: ChatMessageListAdapter? = null
 
     }
 
-
-    var mAdapterChat: ChatMessageListAdapter? = null
     var mListView: ListView? = null
     var mMessage: EditText? = null
     lateinit var viewModel: ChatRoomViewModel
@@ -40,7 +39,6 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_room)
-        chatRoomActivity = this
 
         if (toolbar != null) {
             setSupportActionBar(toolbar as Toolbar?)
@@ -58,9 +56,6 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
 
         val intentComing = intent
         groupChat = intentComing.getParcelableExtra("group")
-        if (intentComing.hasExtra("activity")) {
-            isActivityRunning = true
-        }
         GroupUserIn = groupChat.group_id
 
         mMessage = input_message
@@ -137,7 +132,7 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
 
 
     override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent )
+        super.onNewIntent(intent)
         isActivityRunning = true
         GroupUserIn = groupChat.group_id
         Log.d("Notifications", "ChatRoom Methods: OnNewIntent Called")
@@ -146,6 +141,7 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
     override fun onBackPressed() {
         super.onBackPressed()
         isActivityRunning = false
+        mAdapterChat!!.notifyDataSetChanged()
     }
 
 

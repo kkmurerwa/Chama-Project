@@ -17,7 +17,9 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".chat.ChatRoomActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:exported="true"
+           />
         <activity android:name=".groups.MembersActivity" />
         <activity android:name=".cash.BanksAndMpesaActivity" />
         <activity android:name=".imageUtils.ImageActivity" />
@@ -44,7 +46,6 @@
         <activity android:name=".tasks.TasksActivity" />
         <activity android:name=".withdrawals.WithDrawalsActivity" />
         <activity android:name=".projects.ProjectsExpanded" />
-
         <service
             android:name=".cloudmessaging.FirebaseMessagingService"
             android:stopWithTask="false">

@@ -1,14 +1,15 @@
 package dev.ronnie.chama.cloudmessaging
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -46,6 +47,9 @@ class FirebaseMessagingService :
                 remoteMessage.data["group_id"]
             val senderId =
                 remoteMessage.data["sender_id"]
+
+            Log.d("MessagingService", "SenderId $senderId")
+            Log.d("MessagingService", "CurrentId ${FirebaseAuth.getInstance().currentUser!!.uid}")
             if (senderId != FirebaseAuth.getInstance().currentUser!!.uid) {
                 val query =
                     FirebaseDatabase.getInstance().reference
@@ -53,7 +57,6 @@ class FirebaseMessagingService :
                         .orderByKey()
                         .equalTo(groupId!!)
                 query.addListenerForSingleValueEvent(object : ValueEventListener {
-                    @RequiresApi(Build.VERSION_CODES.M)
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         Log.d("Notif", "notif ${dataSnapshot.value}")
                         if (dataSnapshot.exists()) {
@@ -108,7 +111,6 @@ class FirebaseMessagingService :
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun sendChatmessageNotification(
         title: String,
         message: String,
@@ -116,54 +118,107 @@ class FirebaseMessagingService :
     ) {
 
         if (!ChatRoomActivity.isActivityRunning || ChatRoomActivity.GroupUserIn != group.group_id) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val notificationManager =
+                    this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                val notificationId = 1
+                val channelId = "channel-01"
+                val channelName = "Chat Channel"
+                val importance = NotificationManager.IMPORTANCE_DEFAULT
 
-            val notificationId: Int = buildNotificationId(group.group_id)
-            // Instantiate a Builder object.
-            val builder: NotificationCompat.Builder = NotificationCompat.Builder(
-                this, "default_notification_channel_name"
-            )
-            val pendingIntent = Intent(this, MainGroupActivity::class.java)
-            pendingIntent.flags
-            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            pendingIntent.putExtra("pending_intent_group", group)
-            val notifyPendingIntent = PendingIntent.getActivity(
-                this,
-                0,
-                pendingIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-            //add properties to the builder
-            builder.setSmallIcon(R.drawable.logo)
-                .setLargeIcon(
-                    BitmapFactory.decodeResource(
-                        applicationContext.resources,
-                        R.drawable.logo
+                val mChannel = NotificationChannel(
+                    channelId, channelName, importance
+                )
+                notificationManager.createNotificationChannel(mChannel)
+
+                val mBuilder = NotificationCompat.Builder(this, channelId)
+                    .setContentTitle(title)
+                    .setContentText("New messages in " + group.group_name)
+                    .setSubText(message)
+                    .setColor(Color.BLUE)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setStyle(
+                        NotificationCompat.BigTextStyle()
+                            .bigText("New messages in " + group.group_name).setSummaryText(
+                                message
+                            )
                     )
-                )
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle(title)
-                .setContentText("New messages in " + group.group_name)
-                .setColor(getColor(R.color.blue4))
-                .setAutoCancel(true)
-                .setSubText(message)
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText("New messages in " + group.group_name).setSummaryText(
-                            message
+                    .setSmallIcon(R.drawable.logo)
+                    .setLargeIcon(
+                        BitmapFactory.decodeResource(
+                            applicationContext.resources,
+                            R.drawable.logo
                         )
+                    )
+                    .setOnlyAlertOnce(true)
+                    .setAutoCancel(true)
+
+                val pendingIntent = Intent(this, MainGroupActivity::class.java)
+                pendingIntent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                pendingIntent.putExtra("pending_intent_group", group)
+                val notifyPendingIntent = PendingIntent.getActivity(
+                    this,
+                    0,
+                    pendingIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT  or  PendingIntent.FLAG_ONE_SHOT
                 )
-                .setOnlyAlertOnce(true)
-            builder.setContentIntent(notifyPendingIntent)
-            val mNotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            mNotificationManager.notify(notificationId, builder.build())
 
-            Log.d(
-                "Notifications",
-                "Service: Is Activity running ${ChatRoomActivity.isActivityRunning}"
-            )
-            Log.d("Notifications", "Service: Which Group is this ${ChatRoomActivity.GroupUserIn}")
+                mBuilder.setContentIntent(notifyPendingIntent)
+                notificationManager.notify(notificationId, mBuilder.build())
 
+            } else {
+                val notificationId: Int = buildNotificationId(group.group_id)
+                // Instantiate a Builder object.
+                val builder: NotificationCompat.Builder = NotificationCompat.Builder(
+                    this, "default_notification_channel_name"
+                )
+                val pendingIntent = Intent(this, MainGroupActivity::class.java)
+                pendingIntent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                pendingIntent.putExtra("pending_intent_group", group)
+                val notifyPendingIntent = PendingIntent.getActivity(
+                    this,
+                    0,
+                    pendingIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT  or  PendingIntent.FLAG_ONE_SHOT
+                )
+                //add properties to the builder
+                builder.setSmallIcon(R.drawable.logo)
+                    .setLargeIcon(
+                        BitmapFactory.decodeResource(
+                            applicationContext.resources,
+                            R.drawable.logo
+                        )
+                    )
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setContentTitle(title)
+                    .setContentText("New messages in " + group.group_name)
+                    .setColor(Color.BLUE)
+                    .setAutoCancel(true)
+                    .setSubText(message)
+                    .setStyle(
+                        NotificationCompat.BigTextStyle()
+                            .bigText("New messages in " + group.group_name).setSummaryText(
+                                message
+                            )
+                    )
+                    .setOnlyAlertOnce(true)
+                builder.setContentIntent(notifyPendingIntent)
+                val mNotificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                mNotificationManager.notify(notificationId, builder.build())
+
+                Log.d(
+                    "Notifications",
+                    "Service: Is Activity running ${ChatRoomActivity.isActivityRunning}"
+                )
+                Log.d(
+                    "Notifications",
+                    "Service: Which Group is this ${ChatRoomActivity.GroupUserIn}"
+                )
+
+            }
         }
     }
 
@@ -177,3 +232,4 @@ class FirebaseMessagingService :
     }
 
 }
+

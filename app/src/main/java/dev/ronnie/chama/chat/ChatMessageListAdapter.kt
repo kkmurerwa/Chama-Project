@@ -47,6 +47,7 @@ class ChatMessageListAdapter(
         } else {
             holder = convertView.tag as ViewHolder
             holder.message!!.text = ""
+
         }
 
         try {
@@ -68,6 +69,11 @@ class ChatMessageListAdapter(
                 }
                 holder.mProfileImage!!.tag = getItem(position)!!.profile_image
 
+            }
+
+            if (holder.name!!.tag == null || holder.name!!.tag != getItem(position)!!.name) {
+                holder.name!!.text = getItem(position)!!.name
+                holder.name!!.tag = getItem(position)!!.name
             }
 
 

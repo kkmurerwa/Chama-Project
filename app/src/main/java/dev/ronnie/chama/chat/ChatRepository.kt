@@ -40,7 +40,6 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
 
 
                             if (!mMessageIdSet!!.contains(snapshot.key)) {
-
                                 mMessageIdSet!!.add(snapshot.key!!)
 
                                 message.message =

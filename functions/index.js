@@ -67,7 +67,7 @@ exports.sendNotification = functions.database.ref('/groups/{groupId}/chatroom/{c
 							data_type: "data_type_chat_message",
 							title: "Chama App",
 							message: message,
-							sender_id: user_id,
+							sender_id: messageUserId,
 							group_id: groupId
 						}
 					};
