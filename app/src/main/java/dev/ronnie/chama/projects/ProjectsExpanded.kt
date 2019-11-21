@@ -21,7 +21,7 @@ class ProjectsExpanded : AppCompatActivity() {
             supportActionBar!!.setHomeButtonEnabled(true)
             title = "Details"
             (toolbar as Toolbar).setNavigationOnClickListener {
-              onBackPressed()
+                onBackPressed()
             }
 
         }
@@ -44,7 +44,7 @@ class ProjectsExpanded : AppCompatActivity() {
                 }
 
             }
-            textCost.text = "Shs ${project.cost}"
+            textCost.text = getString(R.string.project_amount, project.cost)
             textLeader.text = project.leader
             textRunTime.text = project.runTime
             textStatues.text = project.statues

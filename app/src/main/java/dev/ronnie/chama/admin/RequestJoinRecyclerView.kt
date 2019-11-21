@@ -62,7 +62,9 @@ class RequestJoinRecyclerView(var context: Context, var list: MutableList<User>)
         fun setData(requester: User) {
             user = requester
             binding.textViewRequestContact.text = requester.phone
-            binding.textViewRequestName.text = requester.fname + requester.sname
+
+            binding.textViewRequestName.text =
+                context.getString(R.string.display_name, requester.fname, requester.sname)
         }
 
         private fun addUserToGroup(groups: Groups, user: User) {

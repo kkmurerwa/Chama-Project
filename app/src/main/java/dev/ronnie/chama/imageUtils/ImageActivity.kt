@@ -1,12 +1,16 @@
 package dev.ronnie.chama.imageUtils
 
-import android.os.Build
-import android.os.Bundle
+import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.squareup.picasso.Picasso
 import dev.ronnie.chama.R
+import dev.ronnie.chama.profile.MyRunnable
+import dev.ronnie.chama.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_image.*
 
 
@@ -30,14 +34,40 @@ class ImageActivity : AppCompatActivity() {
         }
 
         val intent = intent
-        val profile = intent.getStringExtra("Image")
+        if (intent.hasExtra("Image")) {
+            val profile = intent.getStringExtra("Image")
+            Picasso.get()
+                .load(profile)
+                .placeholder(R.drawable.loading)
+                .fit()
+                .centerInside()
+                .into(imageViewBig)
+        } else {
+            setBitmap()
+        }
+    }
 
-        Picasso.get()
-            .load(profile)
-            .placeholder(R.drawable.loading)
-            .fit()
-            .centerInside()
-            .into(imageViewBig)
+    private fun setBitmap() {
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences(ProfileActivity.SHARED_PREFS, Context.MODE_PRIVATE)
+        val imageInput = sharedPreferences.getString("imageByte", "")
+
+        val handler = object : Handler(Looper.getMainLooper()) {
+
+            override fun handleMessage(msg: Message?) {
+                super.handleMessage(msg)
+                val data = msg!!.data
+                val bitmap = data.getParcelable("bitmap") as Bitmap
+                imageViewBig.setImageBitmap(bitmap)
+                imageViewBig.tag = bitmap
+            }
+
+        }
+
+        val thread = Thread(object : MyRunnable(handler, imageInput!!) {
+
+        })
+        thread.start()
     }
 
 }

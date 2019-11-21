@@ -72,13 +72,13 @@ class Create(val model: CreateGroupViewModel) {
             model.listener!!.hideProgressBar()
             return
         }
-        group.group_name = model.name
+        group.group_name = model.name!!
         group.creator_id = FirebaseAuth.getInstance().currentUser!!.uid
-        group.group_id = (groupId)
+        group.group_id = (groupId!!)
 
         reference
             .child("groups")
-            .child(groupId!!)
+            .child(groupId)
             .setValue(group).addOnSuccessListener {
                 val depositmainId = reference
                     .child("groups")

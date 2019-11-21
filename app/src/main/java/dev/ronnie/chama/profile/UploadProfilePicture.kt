@@ -1,7 +1,5 @@
 package dev.ronnie.chama.profile
 
-import android.util.Log
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -26,17 +24,21 @@ class UploadProfilePicture(var model: ProfileViewModel) {
 
         storageReference.putBytes(bytes, metadata).addOnSuccessListener {
 
-            model.listener!!.progressBarGone()
-            model.listener!!.toast("Uploaded Successfully")
-
             val urlTask = it.storage.downloadUrl
             while (!urlTask.isSuccessful);
             url = urlTask.result.toString()
             model.downloadUrl = url
-
-            Log.d("Upload", "DownloadUrl $url")
-
-            model.listener!!.enableSaveButton()
+            FirebaseDatabase.getInstance().reference
+                .child("Users")
+                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child("profile_image")
+                .setValue(url)
+                .addOnCompleteListener {
+                    model.listener!!.savePofilePicToPrefs(url!!)
+                    model.listener!!.enableSaveButton()
+                    model.listener!!.progressBarGone()
+                    model.listener!!.toast("Picture Updated Successfully")
+                }
 
         }.addOnFailureListener {
             model.listener!!.progressBarGone()
@@ -58,18 +60,10 @@ class UploadProfilePicture(var model: ProfileViewModel) {
             model.listener!!.toast("Fields cannot be empty")
             return
         }
-        if (model.downloadUrl.isNullOrEmpty()) {
-
-            model.downloadUrl = Profile.profile.toString()
-
-            Log.d("Uploads", "DownloadUrlParsed ${model.downloadUrl}")
-
-        }
 
         user.fname = model.fname
         user.sname = model.sname
         user.phone = model.phone
-        user.profile_image = model.downloadUrl
         user.user_id = FirebaseAuth.getInstance().currentUser!!.uid
         model.listener!!.progressBarVisible()
         FirebaseDatabase.getInstance().reference
@@ -90,23 +84,16 @@ class UploadProfilePicture(var model: ProfileViewModel) {
                             .child("phone")
                             .setValue(user.phone)
                             .addOnCompleteListener {
-                                FirebaseDatabase.getInstance().reference
-                                    .child("Users")
-                                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
-                                    .child("profile_image")
-                                    .setValue(user.profile_image)
-                                    .addOnCompleteListener {
-                                        model.listener!!.progressBarGone()
-                                        model.listener!!.toast("Profile Updated")
+                                model.listener!!.progressBarGone()
+                                model.listener!!.toast("Profile Updated")
 
-                                    }
                             }
-
                     }
 
             }
 
-
     }
 
+
 }
+

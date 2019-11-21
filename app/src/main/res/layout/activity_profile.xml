@@ -35,7 +35,7 @@
                     android:layout_height="110dp"
                     android:layout_centerVertical="true"
                     android:onClick="@{profileModel::openPicture}"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/loading" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab"

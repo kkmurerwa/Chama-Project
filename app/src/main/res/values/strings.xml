@@ -4,4 +4,8 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="display_name">%2$s </string>
+    <string name="project_amount">Shs %1$s</string>
+    <string name="transaction_name">You are doing Transaction in a %1$s Account</string>
+    <string name="confirm_transaction">Do you want to %1$s %2$s %3$s %4$s?</string>
 </resources>

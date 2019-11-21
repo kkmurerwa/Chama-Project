@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bank"
+        android:title="Bank Accounts" />
+
+    <item
+        android:id="@+id/mpesa"
+        android:title="Mpesa Accounts" />
+
+</menu>

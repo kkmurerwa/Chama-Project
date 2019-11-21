@@ -46,6 +46,8 @@
         <activity android:name=".tasks.TasksActivity" />
         <activity android:name=".withdrawals.WithDrawalsActivity" />
         <activity android:name=".projects.ProjectsExpanded" />
+        <activity android:name=".admin.TransactionActivity" />
+
         <service
             android:name=".cloudmessaging.FirebaseMessagingService"
             android:stopWithTask="false">

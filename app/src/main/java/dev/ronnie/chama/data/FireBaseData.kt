@@ -13,7 +13,6 @@ import dev.ronnie.chama.models.*
 
 class FireBaseData {
 
-
     var userList: MutableList<User> = arrayListOf()
     var displaUserList: MutableList<DisplayUsers> = arrayListOf()
     var dislplayUserListLiveData = MutableLiveData<MutableList<DisplayUsers>>()

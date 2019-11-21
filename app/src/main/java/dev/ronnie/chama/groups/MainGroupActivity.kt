@@ -26,10 +26,11 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
     lateinit var viewModel: MainGroupViewModel
     lateinit var binding: ActivityMainGroupBinding
     lateinit var group: Groups
-    var isUserAdmin: Boolean = false
+
 
     companion object {
         var adminCode: String = ""
+        var isUserAdmin: Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
             title = "Chama"
 
             (toolbar as Toolbar).setNavigationOnClickListener {
-                onBackPressed()
+                finish()
             }
 
         }
@@ -156,6 +157,17 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
             startActivity(chatroomIntent)
 
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        isUserAdmin = false
+        adminCode = ""
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

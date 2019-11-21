@@ -13,5 +13,6 @@ interface ProfileListener {
     fun enableSaveButton()
     fun disableSaveButton()
     fun openPicture()
+    fun savePofilePicToPrefs(image: String)
 
 }

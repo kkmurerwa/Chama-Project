@@ -16,7 +16,7 @@
         android:background="#fafafa"
         android:gravity="center"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:weightSum="9">
 
         <GridLayout
             android:id="@+id/maingrid"
@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
+                    android:padding="5dp"
                     android:orientation="vertical">
 
 
@@ -87,6 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_margin="16dp"
+                    android:padding="5dp"
                     android:orientation="vertical">
 
 
@@ -94,7 +96,7 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/user" />
+                        android:src="@drawable/ic_user" />
 
                     <TextView
                         android:layout_width="wrap_content"

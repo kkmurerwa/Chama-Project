@@ -1,11 +1,14 @@
 package dev.ronnie.chama.cash
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import dev.ronnie.chama.R
+import dev.ronnie.chama.admin.AdminActivity
+import dev.ronnie.chama.admin.TransactionActivity
 import dev.ronnie.chama.databinding.BankListBinding
 import dev.ronnie.chama.models.Bank
 
@@ -28,14 +31,30 @@ class BankRecyclerViewAdapter(var context: Context, var bankList: MutableList<Ba
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val bank = bankList[position]
 
-        bank.let {
-            it.bank_amount = "Shs ${it.bank_amount}"
-
-            holder.binding.bank = it
-        }
-
-
+        holder.setData(bank)
     }
 
-    inner class MyViewHolder(var binding: BankListBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class MyViewHolder(var binding: BankListBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        private var bankSend: Bank? = null
+        fun setData(bank: Bank) {
+            bank.let {
+                it.bank_amount = "Shs ${it.bank_amount}"
+                binding.bank = it
+            }
+
+            bankSend = bank
+        }
+
+        init {
+            binding.root.setOnClickListener {
+                if (AdminActivity.isAdminActivityRunning) {
+                    val intent = Intent(context, TransactionActivity::class.java)
+                    intent.putExtra("group", AdminActivity.group)
+                    intent.putExtra("bank", bankSend)
+                    context.startActivity(intent)
+                }
+            }
+        }
+    }
 }
