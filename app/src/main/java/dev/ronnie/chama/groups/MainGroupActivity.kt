@@ -14,7 +14,6 @@ import dev.ronnie.chama.admin.AdminActivity
 import dev.ronnie.chama.cashandinvestments.CashAndInvestmentsActivity
 import dev.ronnie.chama.chat.ChatRoomActivity
 import dev.ronnie.chama.dashBoard.GroupDashBoard
-import dev.ronnie.chama.data.FireBaseData
 import dev.ronnie.chama.databinding.ActivityMainGroupBinding
 import dev.ronnie.chama.models.Groups
 import dev.ronnie.chama.projects.ProjectsActivity
@@ -26,11 +25,13 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
     lateinit var viewModel: MainGroupViewModel
     lateinit var binding: ActivityMainGroupBinding
     lateinit var group: Groups
+    private lateinit var intentComing: Intent
 
 
     companion object {
-        var adminCode: String = ""
         var isUserAdmin: Boolean = false
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,26 +54,9 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
             }
 
         }
-
-        init()
         getPendingIntent()
 
 
-    }
-
-    private fun init() {
-        val intentComing = intent
-
-        if (intentComing.hasExtra("pending_intent_group")) {
-            group = intentComing.getParcelableExtra("pending_intent_group")
-            FireBaseData().getAdmin(group)
-            setOnclick(group)
-        } else if (intentComing.hasExtra("group")) {
-            group = intentComing.getParcelableExtra("group")
-            FireBaseData().getAdmin(group)
-
-            setOnclick(group)
-        }
     }
 
     private fun setOnclick(group: Groups) {
@@ -115,6 +99,19 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+        intentComing = intent
+
+        if (intentComing.hasExtra("pending_intent_group")) {
+            group = intentComing.getParcelableExtra("pending_intent_group")
+            setOnclick(group)
+        } else if (intentComing.hasExtra("group")) {
+            group = intentComing.getParcelableExtra("group")
+            setOnclick(group)
+        }
+
+        val adminCode = group.creator_id
+
 
         if (adminCode == FirebaseAuth.getInstance().currentUser!!.uid) {
 
@@ -162,7 +159,7 @@ class MainGroupActivity : AppCompatActivity(), MainGroupListener {
     override fun onStop() {
         super.onStop()
         isUserAdmin = false
-        adminCode = ""
+
     }
 
     override fun onBackPressed() {

@@ -77,5 +77,9 @@ class AllGroupsFragment : Fragment(), GroupListener {
         startActivity(intent)
     }
 
+    override fun notifyDatasetChanged() {
+        mAdapterAll.notifyDataSetChanged()
+    }
+
 
 }

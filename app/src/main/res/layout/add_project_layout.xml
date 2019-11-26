@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E8E8E8"
+    android:minWidth="1000dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#4C4A4E" />
+
+        <EditText
+            android:id="@+id/project_name"
+            style="@style/AppTheme.Widget.FormField"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/form_field_height"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="#fff"
+            android:cursorVisible="true"
+            android:textAppearance="@style/AppTheme.Widget.TextView.FormFieldMessage"
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textColor="#4C4A4E" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="#fff">
+
+            <Spinner
+                android:id="@+id/spinner_statues"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/form_field_height"
+                android:backgroundTint="@color/blue1"
+
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leader"
+            android:textColor="#4C4A4E" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="#fff">
+
+            <Spinner
+                android:id="@+id/spinner_leader"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/form_field_height"
+                android:backgroundTint="@color/blue1"
+
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cost"
+            android:textColor="#4C4A4E" />
+
+        <EditText
+            android:id="@+id/project_cost"
+            style="@style/AppTheme.Widget.FormField"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/form_field_height"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="#fff"
+            android:cursorVisible="true"
+            android:inputType="number"
+            android:textAppearance="@style/AppTheme.Widget.TextView.FormFieldMessage"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/textViewAddProject"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="Add Project"
+            android:textAlignment="center"
+            android:textColor="@color/blue1"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/projectProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

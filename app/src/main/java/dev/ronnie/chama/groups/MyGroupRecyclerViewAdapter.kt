@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dev.ronnie.chama.R
+import dev.ronnie.chama.data.FireBaseData
 import dev.ronnie.chama.databinding.MyGroupListBinding
 import dev.ronnie.chama.models.GroupUsers
 import dev.ronnie.chama.models.Groups
@@ -44,13 +45,17 @@ class MyGroupRecyclerViewAdapter(var context: Context, var list: List<Groups>?) 
         var groupSend: Groups? = null
 
 
+
         init {
+
             binding.root.setOnClickListener {
+
                 MyGroupsFragment.viewModel.listener!!.navigate(groupSend!!)
             }
         }
 
         fun setData(group: Groups) {
+
             groupSend = group
             binding.textViewGroupName.text = group.group_name
             val reference = FirebaseDatabase.getInstance().reference

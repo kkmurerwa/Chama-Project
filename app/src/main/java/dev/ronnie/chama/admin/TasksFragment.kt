@@ -13,12 +13,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.ronnie.chama.R
-import dev.ronnie.chama.cash.BankRecyclerViewAdapter
+import dev.ronnie.chama.investment.InvestmentRecyclerViewAdapter
 import dev.ronnie.chama.models.Groups
+import dev.ronnie.chama.projects.ProjectsRecyclerViewAdapter
+import dev.ronnie.chama.tasks.TasksRecyclerViewAdapter
 import kotlinx.android.synthetic.main.bank_account_fragment.view.*
 
-
-class BankAccountsFragment : DialogFragment(), AddAcountListener {
+class TasksFragment : DialogFragment(), AddAcountListener {
 
     lateinit var group: Groups
     lateinit var recyclerview: RecyclerView
@@ -42,37 +43,25 @@ class BankAccountsFragment : DialogFragment(), AddAcountListener {
         textViewAccountName = views!!.input_account_name
         textViewAdd = views!!.add_account
 
+        views!!.addBankAccount.text = "Add A New Task"
+
 
         val bundle = arguments
         if (bundle != null) {
             group = bundle.getParcelable("group") as Groups
-            viewModel.getBank(group).observe(this, Observer {
-                val adapter = BankRecyclerViewAdapter(context!!, it)
+            viewModel.getTasks(group).observe(this, Observer {
+                val adapter = TasksRecyclerViewAdapter(context!!, it)
                 recyclerview.layoutManager = LinearLayoutManager(context)
                 recyclerview.adapter = adapter
             })
         }
 
         textViewEnable.setOnClickListener {
-            prepareViews()
-            textViewAdd.setOnClickListener {
-                viewModel.addBankAccount(group, textViewAccountName.text.toString())
-            }
+
         }
 
 
         return views
-    }
-
-    private fun prepareViews() {
-        textViewEnable.visibility = View.GONE
-        recyclerview.visibility = View.GONE
-        textViewAccountName.visibility = View.VISIBLE
-        views!!.account_name.visibility = View.VISIBLE
-        textViewAdd.visibility = View.VISIBLE
-
-        textViewAccountName.isCursorVisible = true
-        textViewAccountName.requestFocus()
     }
 
     override fun setViewsAfter() {
@@ -87,6 +76,5 @@ class BankAccountsFragment : DialogFragment(), AddAcountListener {
 
     override fun setProgress() {
         views!!.AddingProgress.visibility = View.VISIBLE
-
     }
 }

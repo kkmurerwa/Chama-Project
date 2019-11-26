@@ -60,28 +60,30 @@ class GroupDashBoard : AppCompatActivity(), DashBoardListener {
 
             for (i in it) {
 
-                Log.d("DashBoard", "Deposits Amount ${i.amount}")
-                depositAmount += i.amount!!.toInt()
+                val money = i.amount!!.substring(5)
+
+                Log.d("DashBoard", "Deposits Amount $money")
+                depositAmount += money.toInt()
             }
 
-            textViewDepositsAmount.text = "+Shs $depositAmount"
+            textViewDepositsAmount.text = getString(R.string.depositAmount, depositAmount)
         })
 
         viewModel.getWithdrawals(group).observe(this, Observer {
 
             var withdrawAmount = 0
             for (i in it) {
-
-                Log.d("DashBoard", "Deposits Amount ${i.amount}")
-                withdrawAmount += i.amount!!.toInt()
+                val money = i.amount!!.substring(5)
+                Log.d("DashBoard", "Deposits Amount $money")
+                withdrawAmount += money.toInt()
 
             }
-            textViewWithdrawalAmount.text = "-Shs $withdrawAmount"
+            textViewWithdrawalAmount.text = getString(R.string.withdrawAmount, withdrawAmount)
         })
 
         viewModel.getTasks(group).observe(this, Observer {
 
-            textViewTaskAmount.text = "${it.size} tasks"
+            textViewTaskAmount.text = getString(R.string.tasks, it.size)
         })
 
     }

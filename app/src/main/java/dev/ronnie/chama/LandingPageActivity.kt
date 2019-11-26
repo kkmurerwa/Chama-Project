@@ -12,9 +12,21 @@ import kotlinx.android.synthetic.main.activity_landing_page.*
 
 class LandingPageActivity : AppCompatActivity() {
 
+    companion object {
+        lateinit var landingActivity: LandingPageActivity
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page)
+
+        landingActivity = this
+
+        if (FirebaseAuth.getInstance().currentUser == null || !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
+            val intent = Intent(this, LogInActivity::class.java)
+            startActivity(intent)
+        }
 
         if (toolbar != null) {
             setSupportActionBar(toolbar as Toolbar?)
@@ -22,10 +34,7 @@ class LandingPageActivity : AppCompatActivity() {
 
         }
 
-        if (FirebaseAuth.getInstance().currentUser == null || !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
-            val intent = Intent(this, LogInActivity::class.java)
-            startActivity(intent)
-        }
+
         cardGroups.setOnClickListener {
             startActivity(Intent(this, GroupsActivity::class.java))
         }

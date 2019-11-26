@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginEnd="30dp"
+            android:gravity="center"
             android:layout_toStartOf="@+id/image"
             android:background="@drawable/join_textview"
             android:padding="2dp"
@@ -58,12 +59,14 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginEnd="30dp"
+            android:gravity="center"
             android:layout_toStartOf="@+id/image"
             android:background="@drawable/textview_already_joined"
             android:padding="2dp"
+            android:visibility="gone"
             android:text="Already Joined"
             android:textColor="#fff"
-            android:visibility="gone" />
+          />
 
         <TextView
             android:id="@+id/textViewRequestSent"
@@ -71,12 +74,13 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:visibility="gone"
             android:layout_toStartOf="@+id/image"
-            android:background="@drawable/textview_already_joined"
+            android:background="@drawable/text_view_request_sent"
             android:padding="2dp"
             android:text="Request Sent"
-            android:textColor="#fff"
-            android:visibility="gone" />
+            />
 
         <ImageView
             android:id="@+id/image"

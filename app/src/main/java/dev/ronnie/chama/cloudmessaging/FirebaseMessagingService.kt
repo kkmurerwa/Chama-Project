@@ -21,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dev.ronnie.chama.R
 import dev.ronnie.chama.chat.ChatRoomActivity
+import dev.ronnie.chama.data.FireBaseData
 import dev.ronnie.chama.groups.MainGroupActivity
 import dev.ronnie.chama.models.Groups
 import java.util.*
@@ -161,7 +162,7 @@ class FirebaseMessagingService :
                     this,
                     0,
                     pendingIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT  or  PendingIntent.FLAG_ONE_SHOT
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_ONE_SHOT
                 )
 
                 mBuilder.setContentIntent(notifyPendingIntent)
@@ -181,7 +182,7 @@ class FirebaseMessagingService :
                     this,
                     0,
                     pendingIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT  or  PendingIntent.FLAG_ONE_SHOT
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_ONE_SHOT
                 )
                 //add properties to the builder
                 builder.setSmallIcon(R.drawable.logo)

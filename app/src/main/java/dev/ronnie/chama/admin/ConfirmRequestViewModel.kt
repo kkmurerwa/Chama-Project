@@ -6,7 +6,11 @@ import dev.ronnie.chama.data.FireBaseData
 import dev.ronnie.chama.models.Groups
 import dev.ronnie.chama.models.User
 
-class AdminViewModel : ViewModel() {
+class ConfirmRequestViewModel : ViewModel() {
 
+    var listener: RequestListener? = null
 
+    fun getRequestList(group: Groups): MutableLiveData<MutableList<User>> {
+        return  FireBaseData().getJoinRequest(group,this)
+    }
 }

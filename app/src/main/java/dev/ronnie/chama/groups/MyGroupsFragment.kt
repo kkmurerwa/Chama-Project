@@ -70,4 +70,9 @@ class MyGroupsFragment : Fragment(), GroupListener {
         startActivity(intent)
     }
 
+    override fun notifyDatasetChanged() {
+
+    }
+
+
 }

@@ -1,11 +1,14 @@
 package dev.ronnie.chama.cash
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import dev.ronnie.chama.R
+import dev.ronnie.chama.admin.AdminActivity
+import dev.ronnie.chama.admin.TransactionActivity
 import dev.ronnie.chama.databinding.MpesaListBinding
 import dev.ronnie.chama.models.Mpesa
 
@@ -34,13 +37,33 @@ class MpesaRecyclerViewAdapter(var context: Context, var mpesaList: MutableList<
 
         val mpesa = mpesaList[position]
 
-        mpesa.let {
-            it.mpesa_amount = "Shs ${it.mpesa_amount}"
-            holder.binding.mpesa = it
-        }
+        holder.setData(mpesa)
 
 
     }
 
-    inner class MyViewHolder(var binding: MpesaListBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class MyViewHolder(var binding: MpesaListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        var mpesaSend: Mpesa? = null
+
+        init {
+            binding.root.setOnClickListener {
+                if (AdminActivity.isAdminActivityRunning) {
+                    val intent = Intent(context, TransactionActivity::class.java)
+                    intent.putExtra("group", AdminActivity.group)
+                    intent.putExtra("mpesa", mpesaSend)
+                    context.startActivity(intent)
+                }
+            }
+        }
+
+        fun setData(mpesa: Mpesa) {
+
+            mpesaSend = mpesa
+            binding.mpesa = mpesa
+
+
+        }
+    }
 }

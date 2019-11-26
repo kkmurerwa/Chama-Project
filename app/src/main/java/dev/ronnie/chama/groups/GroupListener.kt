@@ -5,5 +5,6 @@ interface GroupListener {
 
     fun navigate(groups: Groups)
     fun toast(message: String)
+    fun notifyDatasetChanged()
 
 }

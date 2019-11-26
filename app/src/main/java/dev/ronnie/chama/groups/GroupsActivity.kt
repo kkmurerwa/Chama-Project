@@ -15,6 +15,7 @@ class GroupsActivity : AppCompatActivity() {
 
     companion object {
         lateinit var bundle: Bundle
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

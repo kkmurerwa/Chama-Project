@@ -76,11 +76,16 @@ class MpesaAccountsFragment : DialogFragment(), AddAcountListener {
     }
 
     override fun setViewsAfter() {
-        textViewEnable.visibility = View.VISIBLE
-        recyclerview.visibility = View.VISIBLE
+        views!!.AddingProgress.visibility = View.GONE
         textViewAccountName.visibility = View.GONE
         views!!.account_name.visibility = View.GONE
         textViewAdd.visibility = View.GONE
+        textViewEnable.visibility = View.VISIBLE
+        recyclerview.visibility = View.VISIBLE
 
+    }
+
+    override fun setProgress() {
+        views!!.AddingProgress.visibility = View.VISIBLE
     }
 }

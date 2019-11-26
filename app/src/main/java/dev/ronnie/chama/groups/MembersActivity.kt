@@ -8,10 +8,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.ronnie.chama.R
 import dev.ronnie.chama.data.FireBaseData
+import dev.ronnie.chama.models.DisplayUsers
 import dev.ronnie.chama.models.Groups
 import kotlinx.android.synthetic.main.activity_members.*
 
 class MembersActivity : AppCompatActivity() {
+
+    companion object{
+
+        var usersdisp: DisplayUsers? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

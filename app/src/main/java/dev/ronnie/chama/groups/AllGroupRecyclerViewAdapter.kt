@@ -17,7 +17,7 @@ import dev.ronnie.chama.databinding.GroupListBinding
 import dev.ronnie.chama.models.GroupUsers
 import dev.ronnie.chama.models.Groups
 
-class AllGroupRecyclerViewAdapter(var context: Context, private  var groupList: List<Groups>?) :
+class AllGroupRecyclerViewAdapter(var context: Context, private var groupList: List<Groups>?) :
     RecyclerView.Adapter<AllGroupRecyclerViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

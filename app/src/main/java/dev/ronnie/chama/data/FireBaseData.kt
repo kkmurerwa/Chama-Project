@@ -7,8 +7,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import dev.ronnie.chama.groups.MainGroupActivity
+import dev.ronnie.chama.admin.ConfirmRequestViewModel
 import dev.ronnie.chama.models.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FireBaseData {
@@ -17,6 +20,7 @@ class FireBaseData {
     var displaUserList: MutableList<DisplayUsers> = arrayListOf()
     var dislplayUserListLiveData = MutableLiveData<MutableList<DisplayUsers>>()
     var userListLiveData = MutableLiveData<MutableList<User>>()
+    var stringLiveData = MutableLiveData<ArrayList<String>>()
     var depositList: MutableList<Deposits> = arrayListOf()
     var withDrawalsList: MutableList<WithDrawals> = arrayListOf()
     var taskList: MutableList<Tasks> = arrayListOf()
@@ -51,21 +55,12 @@ class FireBaseData {
                     try {
                         if (singleSnapshot.exists()) {
 
-                            val deposits = singleSnapshot.getValue(Deposits::class.java)
-
-
-                            depositList.add(deposits!!)
-
+                            val deposits = singleSnapshot.getValue(Deposits::class.java)!!
+                            deposits.amount = "+Shs ${deposits.amount}"
+                           // deposits.date = getDate(deposits.date!!)
+                            depositList.add(deposits)
                             depositListLiveData.value = depositList
 
-                            for (l in depositList) {
-
-                                Log.d(
-                                    "Deposits",
-                                    "onDataChange: DepositsActivity List: " + l.account + ", " + l.amount + ", " + l.date
-                                )
-
-                            }
 
                         }
                     } catch (e: NullPointerException) {
@@ -110,9 +105,9 @@ class FireBaseData {
                         if (singleSnapshot.exists()) {
 
                             val withDrawals = singleSnapshot.getValue(WithDrawals::class.java)
-
-
-                            withDrawalsList.add(withDrawals!!)
+                            withDrawals!!.amount = "-Shs ${withDrawals.amount}"
+                            //  withDrawals.date = getDate(withDrawals.date!!)
+                            withDrawalsList.add(withDrawals)
 
                             withDrawalsListLiveData.value = withDrawalsList
 
@@ -169,14 +164,6 @@ class FireBaseData {
 
                             taskList.add(tasks!!)
                             tasksListLiveData.value = taskList
-
-                            for (l in taskList) {
-
-                                Log.d(
-                                    "Tasks",
-                                    "onDataChange: Task list: " + l.action + ", " + l.taskName + ", " + l.date
-                                )
-                            }
                         }
                     } catch (e: NullPointerException) {
                         Log.e(
@@ -292,8 +279,9 @@ class FireBaseData {
                                         val user = snapshot.getValue(User::class.java)
 
                                         userList.add(user!!)
-
                                         userListLiveData.value = userList
+
+
                                     }
                                 }
 
@@ -326,6 +314,8 @@ class FireBaseData {
     }
 
     fun getDisplayUsers(group: Groups): LiveData<MutableList<DisplayUsers>> {
+
+        var users: DisplayUsers? = null
         val reference = FirebaseDatabase.getInstance().reference
             .child("groups")
             .child(group.group_id)
@@ -374,7 +364,7 @@ class FireBaseData {
                                                 firstName!!
                                             }
 
-                                        val users =
+                                        users =
                                             DisplayUsers(
                                                 name,
                                                 phone,
@@ -382,7 +372,7 @@ class FireBaseData {
                                                 usersString,
                                                 profile
                                             )
-                                        displaUserList.add(users)
+                                        displaUserList.add(users!!)
                                         dislplayUserListLiveData.value = displaUserList
 
                                     }
@@ -391,7 +381,6 @@ class FireBaseData {
                                 }
                             }
                         })
-
 
                     }
                 }
@@ -430,7 +419,8 @@ class FireBaseData {
                     )
                     if (singleSnapshot.exists()) {
                         val bank = singleSnapshot.getValue(Bank::class.java)
-                        banklist.add(bank!!)
+                        bank!!.bank_amount = "Shs ${bank.bank_amount}"
+                        banklist.add(bank)
 
                         bankListLiveData.value = banklist
                     }
@@ -464,7 +454,8 @@ class FireBaseData {
                     )
                     if (singleSnapshot.exists()) {
                         val mpesa = singleSnapshot.getValue(Mpesa::class.java)
-                        mpesaList.add(mpesa!!)
+                        mpesa!!.mpesa_amount = "Shs ${mpesa.mpesa_amount}"
+                        mpesaList.add(mpesa)
 
                         mpesaListLiveData.value = mpesaList
                     }
@@ -513,28 +504,11 @@ class FireBaseData {
         return investmentListLivedata
     }
 
-    fun getAdmin(group: Groups) {
 
-        val reference = FirebaseDatabase.getInstance().reference
-            .child("groups")
-            .child(group.group_id)
-            .child("creator_id")
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.d(
-                    "Data", "Admin found: "
-                            + dataSnapshot.value
-                )
-                MainGroupActivity.adminCode = dataSnapshot.value.toString()
-            }
-
-        })
-    }
-
-    fun getJoinRequest(group: Groups): MutableLiveData<MutableList<User>> {
+    fun getJoinRequest(
+        group: Groups,
+        model: ConfirmRequestViewModel
+    ): MutableLiveData<MutableList<User>> {
         val joinRequestList: MutableList<User> = arrayListOf()
         val joinRequestListLiveData = MutableLiveData<MutableList<User>>()
         val reference = FirebaseDatabase.getInstance().reference
@@ -578,11 +552,26 @@ class FireBaseData {
                         })
 
                     }
+                } else if (!dataSnapshot.exists()) {
+                    model.listener!!.noRequests()
                 }
             }
 
         })
         return joinRequestListLiveData
 
+    }
+
+
+    fun getStatus(): MutableLiveData<ArrayList<String>> {
+        val arrayListStatues: ArrayList<String> = ArrayList()
+        arrayListStatues.add("Work In Progress")
+        arrayListStatues.add("Not Started")
+        arrayListStatues.add("Completed")
+
+
+        stringLiveData.value = arrayListStatues
+
+        return stringLiveData
     }
 }

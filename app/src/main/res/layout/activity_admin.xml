@@ -119,7 +119,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardGroups2"
+                    android:id="@+id/cardProject"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_rowWeight="1"

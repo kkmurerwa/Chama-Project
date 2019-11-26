@@ -38,10 +38,9 @@ class BankRecyclerViewAdapter(var context: Context, var bankList: MutableList<Ba
 
         private var bankSend: Bank? = null
         fun setData(bank: Bank) {
-            bank.let {
-                it.bank_amount = "Shs ${it.bank_amount}"
-                binding.bank = it
-            }
+
+            binding.bank = bank
+
 
             bankSend = bank
         }

@@ -90,4 +90,12 @@ class LogInActivity : AppCompatActivity(), LogInListener {
 
     }
 
+    override fun onBackPressed() {
+        try {
+            LandingPageActivity.landingActivity.finishAndRemoveTask()
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
+        }
+    }
+
 }

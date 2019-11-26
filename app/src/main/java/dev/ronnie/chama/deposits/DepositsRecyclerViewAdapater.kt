@@ -9,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.ronnie.chama.R
 import dev.ronnie.chama.databinding.DepositListBinding
 import dev.ronnie.chama.models.Deposits
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class DepositsRecyclerViewAdapater(var context: Context, var deposeitList: List<Deposits>) :
     RecyclerView.Adapter<DepositsRecyclerViewAdapater.MyViewHolder>() {
@@ -35,16 +39,22 @@ class DepositsRecyclerViewAdapater(var context: Context, var deposeitList: List<
         RecyclerView.ViewHolder(activityAdapterBinding.root) {
 
         fun setData(deposit: Deposits) {
-            deposit.let {
 
-                it.amount = "+Shs ${deposit.amount}"
-                Log.d(
-                    "DepositsAdapter", "Adapter Found: "
-                            + deposit.account!! + " " + deposit.account!!
-                )
-                activityAdapterBinding.deposit = it
-
+            var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            val date: Date
+            try {
+                date = dateFormat.parse(deposit.date)
+                dateFormat = SimpleDateFormat("d MMM, yyyy 'at' HH:mm aaa")
+                val formatedDate: String = dateFormat.format(date)
+                deposit.date = formatedDate
+                Log.d("DateNew", formatedDate)
+            } catch (e1: ParseException) {
+                e1.printStackTrace()
             }
+
+            activityAdapterBinding.deposit = deposit
+
+
         }
 
 

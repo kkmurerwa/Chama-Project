@@ -1,6 +1,8 @@
 package dev.ronnie.chama.projects
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -18,12 +20,18 @@ class ProjectsActivity : AppCompatActivity(), ProjecsListener {
     lateinit var viewModel: ProjectsViewModel
     lateinit var group: Groups
 
+    companion object{
+        var progressbar: ProgressBar? =  null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_project)
         viewModel = ViewModelProviders.of(this)[ProjectsViewModel::class.java]
         binding.projectsModel = viewModel
         viewModel.listener = this
+
+        progressbar = progressProject
 
         if (toolbar != null) {
             setSupportActionBar(toolbar as Toolbar?)
@@ -44,7 +52,7 @@ class ProjectsActivity : AppCompatActivity(), ProjecsListener {
         group = intent.getParcelableExtra("group")
 
         viewModel.getProjects(group).observe(this, Observer {
-            val adapter = ProjectsRecyclerViewAdapter(this, it)
+            val adapter = ProjectsRecyclerViewAdapter(this, it, group)
             binding.projectRecyclerview.layoutManager = LinearLayoutManager(this)
             binding.projectRecyclerview.adapter = adapter
         })

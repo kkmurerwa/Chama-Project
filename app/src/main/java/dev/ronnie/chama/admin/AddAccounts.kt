@@ -4,6 +4,9 @@ import com.google.firebase.database.FirebaseDatabase
 import dev.ronnie.chama.models.Bank
 import dev.ronnie.chama.models.Groups
 import dev.ronnie.chama.models.Mpesa
+import dev.ronnie.chama.models.Projects
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddAccounts {
 
@@ -15,6 +18,8 @@ class AddAccounts {
         if (bankAccountName[0].isWhitespace()) {
             return
         }
+
+        model.listener!!.setProgress()
 
         val reference = FirebaseDatabase.getInstance().reference
         val bankId = reference
@@ -48,7 +53,7 @@ class AddAccounts {
         if (mpesaAccountName[0].isWhitespace()) {
             return
         }
-
+        model.listener!!.setProgress()
         val reference = FirebaseDatabase.getInstance().reference
         val mpesaId = reference
             .child("groups")
@@ -70,5 +75,69 @@ class AddAccounts {
                 model.listener!!.setViewsAfter()
             }
 
+    }
+
+    private val timestamp: String
+        get() {
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            return sdf.format(Date())
+        }
+
+    fun addProjects(
+        model: AddAccountViewModel,
+        group: Groups,
+        projectName: String,
+        projectCost: String,
+        leader: String,
+        projectStatues: String
+    ) {
+
+        model.listener!!.setProgress()
+
+        val reference = FirebaseDatabase.getInstance().reference
+
+        val projectId = reference
+            .child("groups")
+            .child("projects")
+            .push().key
+
+        val project =
+            Projects(
+                projectName,
+                projectStatues,
+                leader,
+                "0 days",
+                projectCost,
+                timestamp,
+                projectId
+            )
+
+        reference.child("groups")
+            .child(group.group_id)
+            .child("projects")
+            .child(projectId!!)
+            .setValue(project)
+            .addOnSuccessListener {
+                model.listener!!.setViewsAfter()
+            }
+    }
+
+    fun editProject(
+        addAccountViewModel: AddAccountViewModel,
+        group: Groups,
+        project: Projects,
+        statues: String
+    ) {
+        addAccountViewModel.listener!!.setProgress()
+        val reference = FirebaseDatabase.getInstance().reference
+        reference
+            .child("groups")
+            .child(group.group_id)
+            .child("projects")
+            .child(project.projectId!!)
+            .child("statues")
+            .setValue(statues).addOnSuccessListener {
+                addAccountViewModel.listener!!.setViewsAfter()
+            }
     }
 }

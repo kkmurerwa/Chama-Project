@@ -13,10 +13,6 @@ class Create(val model: CreateGroupViewModel) {
 
     fun creatingGroup() {
         val activity = Activities()
-        val deposits = Deposits()
-        deposits.account = "Equity Bank"
-        deposits.amount = "2530"
-        deposits.date = "11-2-199"
 
         val withDrawals = WithDrawals()
         withDrawals.account = "Equity Bank"
@@ -29,9 +25,7 @@ class Create(val model: CreateGroupViewModel) {
         tasks.taskName = "My Wedding"
 
         val deposits2 = Deposits()
-        deposits2.account = "CoOp Bank"
-        deposits2.amount = "2530"
-        deposits2.date = "11-2-1999"
+
 
         val withDrawals2 = WithDrawals()
         withDrawals2.account = "KCB"
@@ -191,12 +185,7 @@ class Create(val model: CreateGroupViewModel) {
                     .child(groupId)
                     .child("activities")
                     .setValue(activity)
-                reference.child("groups")
-                    .child(groupId)
-                    .child("activities")
-                    .child("deposits")
-                    .child(depositmainId!!)
-                    .setValue(deposits)
+
                 reference.child("groups")
                     .child(groupId)
                     .child("activities")

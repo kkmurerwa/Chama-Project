@@ -3,6 +3,7 @@ package dev.ronnie.chama.admin
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -20,7 +21,11 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RequestJoinRecyclerView(var context: Context, var list: MutableList<User>) :
+class RequestJoinRecyclerView(
+    var context: Context,
+    var list: MutableList<User>,
+    val requestGroup: Groups
+) :
     RecyclerView.Adapter<RequestJoinRecyclerView.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -47,15 +52,20 @@ class RequestJoinRecyclerView(var context: Context, var list: MutableList<User>)
 
     inner class MyViewHolder(var binding: RequestListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val group = AdminActivity.group
         private var user: User? = null
 
         init {
             binding.textViewAccept.setOnClickListener {
-                addUserToGroup(group, user!!)
+                addUserToGroup(user!!)
+                binding.textViewAccept.visibility = View.GONE
+                binding.textViewDeny.visibility = View.GONE
+                binding.textViewAccepted.visibility = View.VISIBLE
             }
             binding.textViewDeny.setOnClickListener {
-
+                removeRequest(user!!)
+                binding.textViewAccept.visibility = View.GONE
+                binding.textViewDeny.visibility = View.GONE
+                binding.textViewRemoved.visibility = View.VISIBLE
             }
         }
 
@@ -67,14 +77,34 @@ class RequestJoinRecyclerView(var context: Context, var list: MutableList<User>)
                 context.getString(R.string.display_name, requester.fname, requester.sname)
         }
 
-        private fun addUserToGroup(groups: Groups, user: User) {
+        private fun removeRequest(user: User) {
+
+            val reference = FirebaseDatabase.getInstance().reference
+
+            reference
+                .child("groups")
+                .child(requestGroup.group_id)
+                .child("join_requests")
+                .child(user.user_id!!)
+                .removeValue()
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        context,
+                        "${user.fname} request Removed",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+        }
+
+
+        private fun addUserToGroup(user: User) {
 
             var isUserAdded = false
             val reference = FirebaseDatabase.getInstance().reference
 
             val ref = FirebaseDatabase.getInstance().reference
                 .child("groups")
-                .child(groups.group_id)
+                .child(requestGroup.group_id)
                 .child("users")
             ref.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
@@ -111,7 +141,7 @@ class RequestJoinRecyclerView(var context: Context, var list: MutableList<User>)
                         groupUser.userId = user.user_id
 
                         reference.child("groups")
-                            .child(groups.group_id)
+                            .child(requestGroup.group_id)
                             .child("users")
                             .child(user.user_id!!)
                             .setValue(groupUser)
@@ -122,13 +152,13 @@ class RequestJoinRecyclerView(var context: Context, var list: MutableList<User>)
                                 reference.child("Users")
                                     .child(user.user_id!!)
                                     .child("my_groups")
-                                    .child(groups.group_id)
+                                    .child(requestGroup.group_id)
                                     .child("group_id")
-                                    .setValue(groups.group_id)
+                                    .setValue(requestGroup.group_id)
                                     .addOnSuccessListener {
                                         reference
                                             .child("groups")
-                                            .child(group.group_id)
+                                            .child(requestGroup.group_id)
                                             .child("join_requests")
                                             .child(user.user_id!!)
                                             .removeValue()
@@ -138,7 +168,6 @@ class RequestJoinRecyclerView(var context: Context, var list: MutableList<User>)
                                                     "${user.fname} added to the Group",
                                                     Toast.LENGTH_LONG
                                                 ).show()
-                                                binding.textViewAccept.isEnabled = false
 
                                             }
                                     }

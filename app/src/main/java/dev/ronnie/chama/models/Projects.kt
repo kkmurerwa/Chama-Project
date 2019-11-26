@@ -7,6 +7,8 @@ data class Projects(
     var statues: String? = null,
     var leader: String? = null,
     var runTime: String? = null,
-    var cost: String? = null
+    var cost: String? = null,
+    var date: String? = null,
+    var projectId:String?= null
 ): Serializable {
 }

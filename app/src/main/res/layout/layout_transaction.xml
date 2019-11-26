@@ -1,100 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    <data>
+
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/transaction_name"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
-    </RelativeLayout>
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
-
-        <RadioButton
-            android:id="@+id/radio_deposit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Deposit" />
-
-        <RadioButton
-            android:id="@+id/radio_withdraw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Withdraw" />
-
-    </RadioGroup>
-
-    <EditText
-        android:id="@+id/input_reason"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/grey_border"
-        android:gravity="start"
-        android:hint="Your Reason..."
-        android:maxLines="15"
-        android:minLines="4"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="5dp"
-        android:textSize="14sp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp">
-
-        <EditText
-            android:id="@+id/input_amount"
+        <RelativeLayout
+            android:id="@+id/rel1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/grey_border"
-            android:gravity="start"
-            android:hint="Amount..."
-            android:maxLines="4"
-            android:minLines="1"
-            android:inputType="number"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp"
-            android:textSize="14sp" />
+            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="10dp"
+            android:padding="10dp">
 
-        <Button
-            android:id="@+id/btn_transact"
+            <TextView
+                android:id="@+id/textViewAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/transaction_name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_amount"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/grey_border"
-            android:text="Transact" />
-    </RelativeLayout>
+            android:layout_below="@+id/rel1"
+            android:layout_marginTop="10dp"
+            android:padding="10dp">
 
-</LinearLayout>
+            <RadioButton
+                android:id="@+id/radio_deposit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deposit" />
+
+            <RadioButton
+                android:id="@+id/radio_withdraw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Withdraw" />
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/input_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/grey_border"
+            android:gravity="start"
+            android:hint="message..."
+            android:maxLines="15"
+            android:minLines="4"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_reason"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/input_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/grey_border"
+                android:gravity="start"
+                android:hint="Amount..."
+                android:inputType="number"
+                android:maxLines="4"
+                android:minLines="1"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_transact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_amount"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/grey_border"
+                android:text="Transact" />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/transactionProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+</layout>
