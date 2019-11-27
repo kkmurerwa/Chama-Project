@@ -10,7 +10,7 @@ class CreateGroupViewModel : ViewModel() {
 
     fun create(view: View) {
 
-        val create = Create(this)
+        val create = CreateGroup(this)
         create.creatingGroup()
 
     }

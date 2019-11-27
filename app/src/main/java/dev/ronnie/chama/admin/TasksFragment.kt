@@ -13,13 +13,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.ronnie.chama.R
-import dev.ronnie.chama.investment.InvestmentRecyclerViewAdapter
 import dev.ronnie.chama.models.Groups
-import dev.ronnie.chama.projects.ProjectsRecyclerViewAdapter
 import dev.ronnie.chama.tasks.TasksRecyclerViewAdapter
 import kotlinx.android.synthetic.main.bank_account_fragment.view.*
 
-class TasksFragment : DialogFragment(), AddAcountListener {
+class TasksFragment : DialogFragment() {
 
     lateinit var group: Groups
     lateinit var recyclerview: RecyclerView
@@ -36,7 +34,7 @@ class TasksFragment : DialogFragment(), AddAcountListener {
     ): View? {
         views = inflater.inflate(R.layout.bank_account_fragment, container, false)
         viewModel = ViewModelProviders.of(this)[AddAccountViewModel::class.java]
-        viewModel.listener = this
+
 
         recyclerview = views!!.bankAccountRecycler
         textViewEnable = views!!.relativeEnable
@@ -58,23 +56,29 @@ class TasksFragment : DialogFragment(), AddAcountListener {
 
         textViewEnable.setOnClickListener {
 
+            openNewTaskFragment()
+
         }
 
 
         return views
     }
 
-    override fun setViewsAfter() {
-        views!!.AddingProgress.visibility = View.GONE
-        textViewAccountName.visibility = View.GONE
-        views!!.account_name.visibility = View.GONE
-        textViewAdd.visibility = View.GONE
-        textViewEnable.visibility = View.VISIBLE
-        recyclerview.visibility = View.VISIBLE
+    private fun openNewTaskFragment() {
+
+        val ft = activity!!.supportFragmentManager.beginTransaction()
+        val prev = activity!!.supportFragmentManager.findFragmentByTag("newTaskDialog")
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+
+        val dialog = AddNewTaskFragment()
+        val bundle = Bundle()
+        bundle.putParcelable("group", group)
+        dialog.arguments = bundle
+        dialog.show(ft, "newTaskDialog")
 
     }
 
-    override fun setProgress() {
-        views!!.AddingProgress.visibility = View.VISIBLE
-    }
 }

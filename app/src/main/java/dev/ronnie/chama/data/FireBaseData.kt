@@ -9,9 +9,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dev.ronnie.chama.admin.ConfirmRequestViewModel
 import dev.ronnie.chama.models.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class FireBaseData {
@@ -21,6 +18,10 @@ class FireBaseData {
     var dislplayUserListLiveData = MutableLiveData<MutableList<DisplayUsers>>()
     var userListLiveData = MutableLiveData<MutableList<User>>()
     var stringLiveData = MutableLiveData<ArrayList<String>>()
+    var monthLiveData = MutableLiveData<ArrayList<String>>()
+    var dayLiveData = MutableLiveData<ArrayList<String>>()
+    var yearLiveData = MutableLiveData<ArrayList<String>>()
+    var typeLiveData = MutableLiveData<ArrayList<String>>()
     var depositList: MutableList<Deposits> = arrayListOf()
     var withDrawalsList: MutableList<WithDrawals> = arrayListOf()
     var taskList: MutableList<Tasks> = arrayListOf()
@@ -57,7 +58,7 @@ class FireBaseData {
 
                             val deposits = singleSnapshot.getValue(Deposits::class.java)!!
                             deposits.amount = "+Shs ${deposits.amount}"
-                           // deposits.date = getDate(deposits.date!!)
+                            // deposits.date = getDate(deposits.date!!)
                             depositList.add(deposits)
                             depositListLiveData.value = depositList
 
@@ -569,9 +570,64 @@ class FireBaseData {
         arrayListStatues.add("Not Started")
         arrayListStatues.add("Completed")
 
-
         stringLiveData.value = arrayListStatues
 
         return stringLiveData
+    }
+
+    fun getType(): MutableLiveData<ArrayList<String>> {
+        val arrayListStatues: ArrayList<String> = ArrayList()
+        arrayListStatues.add("Fixed Interest")
+        arrayListStatues.add("Shares")
+        arrayListStatues.add("Investment Funds")
+        arrayListStatues.add("Property")
+        arrayListStatues.add("Insurance")
+        arrayListStatues.add("Cryptocurrency")
+
+        typeLiveData.value = arrayListStatues
+
+        return typeLiveData
+
+    }
+
+    fun getDay(): MutableLiveData<ArrayList<String>> {
+        val arrayListStatues: ArrayList<String> = ArrayList()
+
+        for (i in 1..31) {
+            arrayListStatues.add(i.toString())
+            dayLiveData.value = arrayListStatues
+        }
+        return dayLiveData
+    }
+
+    fun getMonth(): MutableLiveData<ArrayList<String>> {
+        val arrayListStatues: ArrayList<String> = ArrayList()
+        arrayListStatues.add("Jan")
+        arrayListStatues.add("Feb")
+        arrayListStatues.add("Mar")
+        arrayListStatues.add("Apr")
+        arrayListStatues.add("May")
+        arrayListStatues.add("Jun")
+        arrayListStatues.add("Jul")
+        arrayListStatues.add("Aug")
+        arrayListStatues.add("Sep")
+        arrayListStatues.add("Oct")
+        arrayListStatues.add("Nov")
+        arrayListStatues.add("Dec")
+
+        monthLiveData.value = arrayListStatues
+
+        return monthLiveData
+    }
+
+    fun getYear(): MutableLiveData<ArrayList<String>> {
+        val arrayListStatues: ArrayList<String> = ArrayList()
+
+        for (i in 2019..2030) {
+            arrayListStatues.add(i.toString())
+
+            yearLiveData.value = arrayListStatues
+        }
+        return yearLiveData
     }
 }

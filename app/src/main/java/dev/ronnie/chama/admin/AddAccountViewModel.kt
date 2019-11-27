@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dev.ronnie.chama.data.FireBaseData
 import dev.ronnie.chama.models.*
+import java.io.Serializable
 
-class AddAccountViewModel : ViewModel() {
+class AddAccountViewModel : ViewModel(){
 
     var listener: AddAcountListener? = null
 
@@ -55,7 +56,22 @@ class AddAccountViewModel : ViewModel() {
     }
 
     fun editProject(group: Groups, project: Projects, statues: String) {
-        AddAccounts().editProject(this,group, project, statues)
+        AddAccounts().editProject(this, group, project, statues)
+
+    }
+
+    fun addTasks(
+        group: Groups,
+        action: String,
+        taskName: String
+    ) {
+
+        AddAccounts().addTask(this, group, action, taskName)
+
+    }
+
+    fun addInvestment(group: Groups, name: String, amount: String, date: String, type: String?) {
+        AddAccounts().addInvestment(this, group, name, type!!, date, amount)
 
     }
 

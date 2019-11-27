@@ -57,10 +57,27 @@ class InvestmentFragment : DialogFragment(), AddAcountListener {
 
         textViewEnable.setOnClickListener {
 
+            showNewInvestment()
+
         }
 
 
         return views
+    }
+
+    private fun showNewInvestment() {
+        val ft = activity!!.supportFragmentManager.beginTransaction()
+        val prev = activity!!.supportFragmentManager.findFragmentByTag("newInvestmentDialog")
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+
+        val dialog =AddNewInvestmentFragment()
+        val bundle = Bundle()
+        bundle.putParcelable("group", group)
+        dialog.arguments = bundle
+        dialog.show(ft, "newInvestmentDialog")
     }
 
     override fun setViewsAfter() {

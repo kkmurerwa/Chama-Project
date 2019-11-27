@@ -4,4 +4,5 @@ interface AddAcountListener {
 
     fun setViewsAfter()
     fun setProgress()
+
 }

@@ -1,14 +1,28 @@
 package dev.ronnie.chama.admin
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
-import dev.ronnie.chama.models.Bank
-import dev.ronnie.chama.models.Groups
-import dev.ronnie.chama.models.Mpesa
-import dev.ronnie.chama.models.Projects
+import dev.ronnie.chama.models.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddAccounts {
+
+    var dateLivedata = MutableLiveData<String>()
+
+    companion object {
+        var date: String? = null
+    }
+
+
+    fun getDate(): LiveData<String> {
+
+        dateLivedata.value = date
+
+        return dateLivedata
+
+    }
 
     fun addBankAccount(model: AddAccountViewModel, group: Groups, bankAccountName: String) {
 
@@ -92,6 +106,13 @@ class AddAccounts {
         projectStatues: String
     ) {
 
+        if (projectName.isEmpty() || projectCost.isEmpty()) {
+            return
+        }
+        if (projectName[0].isWhitespace()) {
+            return
+        }
+
         model.listener!!.setProgress()
 
         val reference = FirebaseDatabase.getInstance().reference
@@ -106,7 +127,7 @@ class AddAccounts {
                 projectName,
                 projectStatues,
                 leader,
-                "0 days",
+                " ",
                 projectCost,
                 timestamp,
                 projectId
@@ -137,6 +158,80 @@ class AddAccounts {
             .child(project.projectId!!)
             .child("statues")
             .setValue(statues).addOnSuccessListener {
+                addAccountViewModel.listener!!.setViewsAfter()
+            }
+    }
+
+    fun addTask(
+        addAccountViewModel: AddAccountViewModel,
+        group: Groups,
+        action: String,
+        taskName: String
+    ) {
+
+        if (taskName.isEmpty() || action.isEmpty()) {
+            return
+        }
+        if (taskName[0].isWhitespace() || action[0].isWhitespace()) {
+            return
+        }
+        addAccountViewModel.listener!!.setProgress()
+        val reference = FirebaseDatabase.getInstance().reference
+        val taskId = reference
+            .child("groups")
+            .child("activities")
+            .child("tasks")
+            .push().key
+        val formatter = SimpleDateFormat("d MMM, yyyy", Locale.getDefault())
+        val dateString = formatter.format(Date())
+
+        val tasks = Tasks(taskName, action, dateString, taskId)
+        reference.child("groups")
+            .child(group.group_id)
+            .child("activities")
+            .child("tasks")
+            .child(taskId!!)
+            .setValue(tasks)
+            .addOnSuccessListener {
+                addAccountViewModel.listener!!.setViewsAfter()
+            }
+
+    }
+
+    fun addInvestment(
+        addAccountViewModel: AddAccountViewModel,
+        group: Groups,
+        name: String,
+        type: String,
+        maturityDate: String,
+        amount: String
+    ) {
+
+        if (name.isEmpty() || maturityDate.isEmpty() || amount.isEmpty()) {
+            return
+        }
+        if (name[0].isWhitespace() || amount[0].isWhitespace()) {
+            return
+        }
+
+        addAccountViewModel.listener!!.setProgress()
+        val reference = FirebaseDatabase.getInstance().reference
+
+        val inv1id = reference
+            .child("groups")
+            .child("financials")
+            .child("investments")
+            .push().key
+
+        val investment = Investment(name, type, amount, maturityDate, inv1id!!)
+
+        reference.child("groups")
+            .child(group.group_id)
+            .child("financials")
+            .child("investments")
+            .child(inv1id)
+            .setValue(investment)
+            .addOnSuccessListener {
                 addAccountViewModel.listener!!.setViewsAfter()
             }
     }
