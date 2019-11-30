@@ -34,12 +34,11 @@ class LogIn(var model: LogInViewModel) {
     private fun verifyEmail() {
         val user = FirebaseAuth.getInstance().currentUser
         val builder = androidx.appcompat.app.AlertDialog.Builder(LogInActivity.contextLogInActivity)
-        builder.setTitle("Verify Email")
         builder.setMessage("This email address is not verified.")
         builder.setCancelable(true)
 
         builder.setPositiveButton(
-            "Confirm"
+            "Verify"
         ) { dialog, _ ->
             user?.sendEmailVerification()?.addOnCompleteListener {
                 model.listener!!.toast("Email Sent")

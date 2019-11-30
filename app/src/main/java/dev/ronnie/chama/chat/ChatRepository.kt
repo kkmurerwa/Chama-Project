@@ -12,16 +12,16 @@ import dev.ronnie.chama.models.Groups
 import dev.ronnie.chama.models.User
 import java.util.*
 
-class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
+class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel?) {
 
 
     fun getMessages(): MutableList<ChatMessage>? {
         if (mMessagesList == null) {
             mMessagesList = ArrayList()
             mMessageIdSet = HashSet()
-            model.listener.initMessagesList()
+            model?.listener?.initMessagesList()
         }
-        model.listener.initMessagesList()
+        model?.listener?.initMessagesList()
 
         val reference = FirebaseDatabase.getInstance().reference
         val query = reference.child("groups")
@@ -61,8 +61,8 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
                     }
                 }
                 getUserDetails()
-                model.listener.notifyAdapter()
-                model.listener.setSelection()
+                model?.listener?.notifyAdapter()
+                model?.listener?.setSelection()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -87,8 +87,8 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
                         singleSnapshot.getValue(User::class.java)!!.profile_image
                     message.name = singleSnapshot.getValue(User::class.java)!!.fname
                     mMessagesList!!.add(message)
-                    model.listener.notifyAdapter()
-                    model.listener.setSelection()
+                    model?.listener?.notifyAdapter()
+                    model?.listener?.setSelection()
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -100,6 +100,7 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
 
 
     fun getUserDetails() {
+
         val reference = FirebaseDatabase.getInstance().reference
         for (i in 0 until mMessagesList!!.size) {
             if (mMessagesList!![i].user_id != null && mMessagesList!![i].profile_image == "") {
@@ -111,8 +112,17 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel) {
                         val singleSnapshot = dataSnapshot.children.iterator().next()
                         mMessagesList!![i].profile_image =
                             singleSnapshot.getValue(User::class.java)!!.profile_image
-                        mMessagesList!![i].name = singleSnapshot.getValue(User::class.java)!!.fname
-                        model.listener.notifyAdapter()
+//                        val name: String
+//                        name =
+//                            if (!singleSnapshot.getValue(User::class.java)!!.sname.isNullOrEmpty()) {
+//                                singleSnapshot.getValue(User::class.java)!!.fname + " " + singleSnapshot.getValue(
+//                                    User::class.java
+//                                )!!.sname
+//                            } else {
+//                                singleSnapshot.getValue(User::class.java)!!.fname!!
+//                            }
+                        mMessagesList!![i].name =  singleSnapshot.getValue(User::class.java)!!.fname
+                        model?.listener?.notifyAdapter()
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {

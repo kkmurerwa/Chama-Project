@@ -1,37 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:paddingTop="8dp">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_thumbnail"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/message_sender"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp">
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:text="John Doe"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/img_thumbnail"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_thumbnail"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="25dp" />
+    <TextView
+        android:id="@+id/message_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_rectangle_orange"
+        android:maxWidth="240dp"
+        android:padding="8dp"
+        android:text="hi man, how are you?"
+        android:textColor="#000"
+        app:layout_constraintLeft_toRightOf="@+id/img_thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/message_sender" />
 
-        <TextView
-            android:id="@+id/message_sender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/img_thumbnail"
-            android:layout_marginStart="25dp"
-            android:layout_toEndOf="@+id/img_thumbnail" />
+    <TextView
+        android:id="@+id/text_message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="11:40"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/message_body"
+        app:layout_constraintLeft_toRightOf="@+id/message_body" />
 
-        <TextView
-            android:id="@+id/message_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/message_sender"
-            android:layout_alignStart="@+id/message_sender" />
-    </RelativeLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

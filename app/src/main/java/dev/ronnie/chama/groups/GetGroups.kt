@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import dev.ronnie.chama.chat.ChatRepository
 import dev.ronnie.chama.models.Groups
 import dev.ronnie.chama.models.Mygroups
 import java.util.*
@@ -53,6 +54,7 @@ class GetGroups(val model: AllGroupsViewModel?) {
                                     objectMap["group_name"]!!.toString()
                                 groups.creator_id =
                                     objectMap["creator_id"]!!.toString()
+
                                 allGroupsList!!.add(groups)
                                 allGroupsLiveData.value = allGroupsList
                             }
@@ -75,6 +77,10 @@ class GetGroups(val model: AllGroupsViewModel?) {
             }
 
             override fun onCancelled(dataSnapshot: DatabaseError) {
+                Log.d(
+                    "GetGroups", "Group Error ${dataSnapshot.message}: "
+
+                )
 
             }
         })
@@ -121,6 +127,7 @@ class GetGroups(val model: AllGroupsViewModel?) {
                                                 objectMap["group_name"]!!.toString()
                                             groups.creator_id =
                                                 objectMap["creator_id"]!!.toString()
+
                                             myGroupsList!!.add(groups)
                                             myGroupsLiveData.value = myGroupsList
                                         }
@@ -142,6 +149,10 @@ class GetGroups(val model: AllGroupsViewModel?) {
             }
 
             override fun onCancelled(dataSnapshot: DatabaseError) {
+                Log.d(
+                    "GetGroups", "My Group Error ${dataSnapshot.message}: "
+
+                )
 
             }
         })

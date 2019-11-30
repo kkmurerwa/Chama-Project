@@ -5,15 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import dev.ronnie.chama.R
 import dev.ronnie.chama.models.ChatMessage
 import dev.ronnie.chama.models.Groups
 import kotlinx.android.synthetic.main.activity_chat_room.*
+
 
 class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
 
@@ -24,11 +26,11 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
         var mMessagesReference: DatabaseReference? = null
         var isActivityRunning = false
         var GroupUserIn: String? = null
-        var mAdapterChat: ChatMessageListAdapter? = null
+        var mAdapterChat: ChatMessageRecyclerdapter? = null
 
     }
 
-    var mListView: ListView? = null
+    var mListView: RecyclerView? = null
     var mMessage: EditText? = null
     lateinit var viewModel: ChatRoomViewModel
     lateinit var groupChat: Groups
@@ -38,11 +40,17 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_room)
 
+
+        val intentComing = intent
+        groupChat = intentComing.getParcelableExtra("group")
+        GroupUserIn = groupChat.group_id
+
+
         if (toolbar != null) {
             setSupportActionBar(toolbar as Toolbar?)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setHomeButtonEnabled(true)
-            title = "Chatroom"
+            title = groupChat.group_name
             (toolbar as Toolbar).setNavigationOnClickListener {
                 onBackPressed()
             }
@@ -52,10 +60,6 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
         viewModel = ViewModelProviders.of(this)[ChatRoomViewModel::class.java]
         viewModel.listener = this
 
-        val intentComing = intent
-        groupChat = intentComing.getParcelableExtra("group")
-        GroupUserIn = groupChat.group_id
-
         mMessage = input_message
         mListView = listView
 
@@ -63,10 +67,25 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
         viewModel.getMessages(groupChat)
 
         checkmark.setOnClickListener {
-            listView!!.smoothScrollToPosition(mAdapterChat!!.count - 1)
+
+            if (mAdapterChat != null && mAdapterChat!!.itemCount > 0) {
+                listView!!.smoothScrollToPosition(mAdapterChat!!.itemCount - 1)
+            }
             val message = input_message.text.toString()
             viewModel.createNewMessage(groupChat, message)
         }
+
+        mListView!!.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                mListView!!.postDelayed({
+                    mListView!!.scrollToPosition(
+                        mListView!!.adapter!!.itemCount - 1
+                    )
+                }, 10)
+            }
+        }
+
+
 
         hideSoftKeyboard()
     }
@@ -80,11 +99,15 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
     }
 
     override fun initMessagesList() {
+
         mAdapterChat = mMessagesList?.let {
-            ChatMessageListAdapter(this, R.layout.message_list, it)
+            ChatMessageRecyclerdapter(this, it)
+
         }
+        mListView!!.layoutManager = LinearLayoutManager(this)
         mListView!!.adapter = mAdapterChat
-        listView!!.smoothScrollToPosition(mAdapterChat!!.count - 1)
+
+
     }
 
     override fun notifyAdapter() {
@@ -92,7 +115,7 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
     }
 
     override fun setSelection() {
-        mListView!!.setSelection(mAdapterChat!!.count - 1)
+        mListView!!.scrollToPosition(mAdapterChat!!.itemCount - 1)
     }
 
     override fun onDestroy() {

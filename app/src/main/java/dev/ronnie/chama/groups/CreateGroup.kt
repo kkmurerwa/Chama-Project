@@ -40,7 +40,6 @@ class CreateGroup(val model: CreateGroupViewModel) {
             .child("groups")
             .child(groupId)
             .setValue(group).addOnSuccessListener {
-
                 val groupUser = GroupUsers()
 
                 val formatter = SimpleDateFormat("d MMM, yyyy", Locale.getDefault())

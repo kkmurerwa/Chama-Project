@@ -21,7 +21,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dev.ronnie.chama.R
 import dev.ronnie.chama.chat.ChatRoomActivity
-import dev.ronnie.chama.data.FireBaseData
 import dev.ronnie.chama.groups.MainGroupActivity
 import dev.ronnie.chama.models.Groups
 import java.util.*

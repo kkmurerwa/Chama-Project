@@ -43,7 +43,7 @@ class Register(private var model: SignUpViewModel) {
 
     }
 
-    fun saveUser(email: String, password: String) {
+    private fun saveUser(email: String, password: String) {
         val user = User()
         user.fname = email.substring(0, email.indexOf("@"))
         user.phone = ""
@@ -69,8 +69,8 @@ class Register(private var model: SignUpViewModel) {
         val user = FirebaseAuth.getInstance().currentUser
         val builder =
             androidx.appcompat.app.AlertDialog.Builder(SignUpActivity.contextSignUpActivity)
-        builder.setTitle("Account created")
-        builder.setMessage("Confirm email to continue")
+
+        builder.setMessage("Account created successfully confirm email to continue")
         builder.setCancelable(true)
 
         builder.setPositiveButton(

@@ -19,6 +19,7 @@
             android:name=".chat.ChatRoomActivity"
             android:launchMode="singleTop"
             android:exported="true"
+            android:windowSoftInputMode="adjustPan"
            />
         <activity android:name=".groups.MembersActivity" />
         <activity android:name=".cash.BanksAndMpesaActivity" />

@@ -44,4 +44,8 @@ class LandingPageActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        //TODO Finish Log In Activity
+    }
+
 }

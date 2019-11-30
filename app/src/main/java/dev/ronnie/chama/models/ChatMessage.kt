@@ -1,7 +1,7 @@
 package dev.ronnie.chama.models
 
 
-data class ChatMessage (
+data class ChatMessage(
 
     var message: String? = null,
     var user_id: String? = null,
