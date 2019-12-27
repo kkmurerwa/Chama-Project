@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -23,7 +22,6 @@ class EditProjectFragment : DialogFragment(), AddAcountListener {
     lateinit var viewModel: AddAccountViewModel
     lateinit var group: Groups
     lateinit var project: Projects
-
 
 
     override fun onCreateView(
@@ -54,6 +52,7 @@ class EditProjectFragment : DialogFragment(), AddAcountListener {
     }
 
     private fun init() {
+
         FireBaseData().getStatus().observe(this, Observer {
             views!!.spinner_edit!!.adapter =
                 ArrayAdapter(

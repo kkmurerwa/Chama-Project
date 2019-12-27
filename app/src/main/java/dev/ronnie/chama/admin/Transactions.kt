@@ -6,7 +6,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dev.ronnie.chama.models.*
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 

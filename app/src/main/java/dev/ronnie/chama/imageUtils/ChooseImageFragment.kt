@@ -29,11 +29,9 @@ class ChooseImageFragment : DialogFragment() {
 
     private var uriProfileImage: Uri? = null
 
-
     interface OnInputListener {
         fun sendInput(bytes: ByteArray)
     }
-
 
     companion object {
         lateinit var progressBar: ProgressBar

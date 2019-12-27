@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.ronnie.chama.R
 import dev.ronnie.chama.investment.InvestmentRecyclerViewAdapter
 import dev.ronnie.chama.models.Groups
-import dev.ronnie.chama.projects.ProjectsRecyclerViewAdapter
 import kotlinx.android.synthetic.main.bank_account_fragment.view.*
 
 class InvestmentFragment : DialogFragment(), AddAcountListener {
@@ -42,7 +41,7 @@ class InvestmentFragment : DialogFragment(), AddAcountListener {
         textViewAccountName = views!!.input_account_name
         textViewAdd = views!!.add_account
 
-        views!!.addBankAccount.text = "Add A New Investment"
+        views!!.addBankAccount.text = getString(R.string.Add_investment)
 
 
         val bundle = arguments
@@ -73,7 +72,7 @@ class InvestmentFragment : DialogFragment(), AddAcountListener {
         }
         ft.addToBackStack(null)
 
-        val dialog =AddNewInvestmentFragment()
+        val dialog = AddNewInvestmentFragment()
         val bundle = Bundle()
         bundle.putParcelable("group", group)
         dialog.arguments = bundle

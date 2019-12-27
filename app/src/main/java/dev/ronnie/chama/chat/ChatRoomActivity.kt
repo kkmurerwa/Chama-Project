@@ -74,14 +74,13 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
             val message = input_message.text.toString()
             viewModel.createNewMessage(groupChat, message)
         }
-
         mListView!!.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
             if (bottom < oldBottom) {
                 mListView!!.postDelayed({
                     mListView!!.scrollToPosition(
                         mListView!!.adapter!!.itemCount - 1
                     )
-                }, 10)
+                }, 5)
             }
         }
 
@@ -102,11 +101,9 @@ class ChatRoomActivity : AppCompatActivity(), ChatRoomListener {
 
         mAdapterChat = mMessagesList?.let {
             ChatMessageRecyclerdapter(this, it)
-
         }
         mListView!!.layoutManager = LinearLayoutManager(this)
         mListView!!.adapter = mAdapterChat
-
 
     }
 

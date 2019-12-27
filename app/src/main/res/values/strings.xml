@@ -11,4 +11,8 @@
     <string name="depositAmount">+Shs %1$d</string>
     <string name="withdrawAmount">-Shs %1$d</string>
     <string name="tasks">%1$d tasks</string>
+    <string name="Add_investment">Add A New Investment</string>
+    <string name="add_mpesa">Add A New Mpesa Account</string>
+    <string name="add_project">Add A New Project</string>
+    <string name="add_task">Add A New Task</string>
 </resources>

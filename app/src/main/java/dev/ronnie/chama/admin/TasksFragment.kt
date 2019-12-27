@@ -41,7 +41,7 @@ class TasksFragment : DialogFragment() {
         textViewAccountName = views!!.input_account_name
         textViewAdd = views!!.add_account
 
-        views!!.addBankAccount.text = "Add A New Task"
+        views!!.addBankAccount.text = getString(R.string.add_task)
 
 
         val bundle = arguments

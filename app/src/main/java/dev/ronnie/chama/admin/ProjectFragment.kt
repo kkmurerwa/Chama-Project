@@ -55,7 +55,7 @@ class ProjectFragment : DialogFragment(), AddAcountListener,
         textViewAccountName = views!!.input_account_name
         textViewAdd = views!!.add_account
 
-        views!!.addBankAccount.text = "Add A New Project"
+        views!!.addBankAccount.text = getString(R.string.add_project)
 
 
         val bundle = arguments

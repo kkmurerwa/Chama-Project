@@ -30,7 +30,7 @@ class LogInViewModel : ViewModel() {
 
     }
 
-    fun goToSignUp(view:View) {
+    fun goToSignUp(view: View) {
 
         listener!!.goToSignUp()
 

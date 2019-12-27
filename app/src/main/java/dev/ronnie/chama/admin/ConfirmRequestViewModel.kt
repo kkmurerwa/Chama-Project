@@ -11,6 +11,6 @@ class ConfirmRequestViewModel : ViewModel() {
     var listener: RequestListener? = null
 
     fun getRequestList(group: Groups): MutableLiveData<MutableList<User>> {
-        return  FireBaseData().getJoinRequest(group,this)
+        return FireBaseData().getJoinRequest(group, this)
     }
 }
