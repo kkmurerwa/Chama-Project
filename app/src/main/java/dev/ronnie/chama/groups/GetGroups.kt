@@ -9,7 +9,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import dev.ronnie.chama.chat.ChatRepository
 import dev.ronnie.chama.models.Groups
 import dev.ronnie.chama.models.Mygroups
 import java.util.*
@@ -27,7 +26,6 @@ class GetGroups(val model: AllGroupsViewModel?) {
     }
 
     var myGroupsLiveData = MutableLiveData<ArrayList<Groups>>()
-
 
     fun getGroups(): LiveData<ArrayList<Groups>> {
 

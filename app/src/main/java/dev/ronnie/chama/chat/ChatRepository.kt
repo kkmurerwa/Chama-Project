@@ -38,7 +38,6 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel?) {
                         try {
                             val message = ChatMessage()
 
-
                             if (!mMessageIdSet!!.contains(snapshot.key)) {
                                 mMessageIdSet!!.add(snapshot.key!!)
 
@@ -112,16 +111,7 @@ class ChatRepository(var groupChat: Groups, val model: ChatRoomViewModel?) {
                         val singleSnapshot = dataSnapshot.children.iterator().next()
                         mMessagesList!![i].profile_image =
                             singleSnapshot.getValue(User::class.java)!!.profile_image
-//                        val name: String
-//                        name =
-//                            if (!singleSnapshot.getValue(User::class.java)!!.sname.isNullOrEmpty()) {
-//                                singleSnapshot.getValue(User::class.java)!!.fname + " " + singleSnapshot.getValue(
-//                                    User::class.java
-//                                )!!.sname
-//                            } else {
-//                                singleSnapshot.getValue(User::class.java)!!.fname!!
-//                            }
-                        mMessagesList!![i].name =  singleSnapshot.getValue(User::class.java)!!.fname
+                        mMessagesList!![i].name = singleSnapshot.getValue(User::class.java)!!.fname
                         model?.listener?.notifyAdapter()
                     }
 

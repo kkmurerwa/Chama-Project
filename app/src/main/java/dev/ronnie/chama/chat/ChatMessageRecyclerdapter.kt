@@ -18,18 +18,22 @@ import java.util.*
 
 class ChatMessageRecyclerdapter(var context: Context, var list: List<ChatMessage>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val view: View
 
-        return if (viewType == 0) {
-            view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.my_message_list, parent, false)
-            SendViewHolder(view)
-        } else {
-            view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.message_list, parent, false)
-            ReceiveViewHolder(view)
+        return when (viewType) {
+            0 -> {
+                view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.my_message_list, parent, false)
+                SendViewHolder(view)
+            }
+            else -> {
+                view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.message_list, parent, false)
+                ReceiveViewHolder(view)
+            }
         }
     }
 
@@ -75,7 +79,7 @@ class ChatMessageRecyclerdapter(var context: Context, var list: List<ChatMessage
             val date: Date
             try {
                 date = dateFormat.parse(message.timestamp)
-                dateFormat = SimpleDateFormat("HH:mm aaa")
+                dateFormat = SimpleDateFormat("hh:mm aaa")
                 val formatedDate: String = dateFormat.format(date)
                 itemView.my_message_time.text = formatedDate
                 Log.d("DateNew", formatedDate)
@@ -92,20 +96,18 @@ class ChatMessageRecyclerdapter(var context: Context, var list: List<ChatMessage
         fun bind(message: ChatMessage) {
             itemView.message_body.text = message.message
 
-
             val androidColors =
                 context.resources.getIntArray(R.array.androidcolors)
             val randomAndroidColor = androidColors[Random().nextInt(androidColors.size)]
             itemView.message_sender.setTextColor(randomAndroidColor)
             itemView.message_sender.text = message.name
-            itemView.message_sender.tag = message.name
 
 
             var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
             val date: Date
             try {
                 date = dateFormat.parse(message.timestamp)
-                dateFormat = SimpleDateFormat("HH:mm aaa")
+                dateFormat = SimpleDateFormat("hh:mm aaa")
                 val formatedDate: String = dateFormat.format(date)
                 itemView.text_message_time.text = formatedDate
                 Log.d("DateNew", formatedDate)

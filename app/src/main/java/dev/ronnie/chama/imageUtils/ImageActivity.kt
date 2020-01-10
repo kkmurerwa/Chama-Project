@@ -29,7 +29,7 @@ class ImageActivity : AppCompatActivity() {
             supportActionBar!!.setHomeButtonEnabled(true)
             title = "Profile"
             (toolbar2 as Toolbar).setNavigationOnClickListener {
-                finish()
+                onBackPressed()
             }
         }
 

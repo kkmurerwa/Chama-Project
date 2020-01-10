@@ -135,7 +135,7 @@ class FirebaseMessagingService :
                     .setContentTitle(title)
                     .setContentText("New messages in " + group.group_name)
                     .setSubText(message)
-                    .setColor(Color.BLUE)
+                    .setColor(Color.parseColor("#66a3ff"))
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setStyle(
                         NotificationCompat.BigTextStyle()
@@ -194,7 +194,7 @@ class FirebaseMessagingService :
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setContentTitle(title)
                     .setContentText("New messages in " + group.group_name)
-                    .setColor(Color.BLUE)
+                    .setColor(Color.parseColor("#66a3ff"))
                     .setAutoCancel(true)
                     .setSubText(message)
                     .setStyle(
